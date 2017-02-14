@@ -1,6 +1,7 @@
 package poq.game;
 
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.widget.TextView;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -19,21 +20,23 @@ public class Poq extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Intent intent = getIntent();
 
-        for(int i = 90; i >= 0; i--) {
-            TextView view1 = (TextView) findViewById(R.id.seconds);
-            view1.setText(""+i);
-            holdOneSecond();
+        TextView second = (TextView) findViewById(R.id.seconds);
+
+        for(int i = 500000000; i >= 0; i--) {
+            String text = ""+i;
+            second.setText(text);
+            //holdOneSecond();
         }
 
     }
 
 
-    public void holdOneSecond(){
-        Calendar c = Calendar.getInstance();
-        int beginning = c.get(Calendar.MILLISECOND);
-        int end = beginning;
+    public void holdOneSecond() {
+        //Calendar c = Calendar.getInstance();
+        long beginning = System.currentTimeMillis();
+        long end = beginning;
         while(end - beginning < 1000){
-            end = c.get(Calendar.MILLISECOND);
+            end = System.currentTimeMillis();
         }
     }
 }
