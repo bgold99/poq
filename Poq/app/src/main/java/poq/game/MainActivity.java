@@ -18,6 +18,11 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, Poq.class);
         startActivity(intent);
     }
+
+    public void howTo(View view){
+        Intent intent = new Intent(this, Instructions.class);
+        startActivity(intent);
+    }
 }
 
 
