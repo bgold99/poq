@@ -3,6 +3,7 @@ package poq.game;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
+import android.view.View;
 import android.widget.TextView;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -16,6 +17,8 @@ import java.util.Timer;
 
 public class Poq extends AppCompatActivity {
     TextView second;
+    int timeRemaining = 91000;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -23,17 +26,25 @@ public class Poq extends AppCompatActivity {
         Intent intent = getIntent();
         second = (TextView) findViewById(R.id.seconds);
 
-        CountDownTimer timer = new CountDownTimer(90000, 1000) {
+        CountDownTimer timer = new CountDownTimer(timeRemaining, 1000) {
 
             public void onTick(long millisUntilFinished) {
-                second.setText("" + millisUntilFinished / 1000);
+                second.setText("Time: " + millisUntilFinished / 1000);
             }
 
             public void onFinish() {
-                second.setText("0");
+                second.setText("Time's Up!");
             }
 
         }.start();
 
+    }
+
+    public void pause(View view){
+    }
+
+    public void main(View view){
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
     }
 }
