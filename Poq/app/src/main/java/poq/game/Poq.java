@@ -1,42 +1,39 @@
 package poq.game;
 
 import android.os.Bundle;
-import android.os.SystemClock;
+import android.os.CountDownTimer;
+import android.os.Handler;
 import android.widget.TextView;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 
-import java.util.Calendar;
+import java.util.Timer;
+
 
 /**
  * Created by Brittany Goldstein on 2/10/2017.
  */
 
 public class Poq extends AppCompatActivity {
-
+    TextView second;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Intent intent = getIntent();
+        second = (TextView) findViewById(R.id.seconds);
 
-        TextView second = (TextView) findViewById(R.id.seconds);
+        CountDownTimer timer = new CountDownTimer(90000, 1000) {
 
-        for(int i = 500000000; i >= 0; i--) {
-            String text = ""+i;
-            second.setText(text);
-            //holdOneSecond();
-        }
+            public void onTick(long millisUntilFinished) {
+                second.setText("" + millisUntilFinished / 1000);
+            }
 
-    }
+            public void onFinish() {
+                second.setText("0");
+            }
 
+        }.start();
 
-    public void holdOneSecond() {
-        //Calendar c = Calendar.getInstance();
-        long beginning = System.currentTimeMillis();
-        long end = beginning;
-        while(end - beginning < 1000){
-            end = System.currentTimeMillis();
-        }
     }
 }
