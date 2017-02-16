@@ -1,6 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimary">
 
+    <TextView
+        android:layout_width="140pt"
+        android:layout_height="wrap_content"
+        android:text="Swipe across two shapes to swap them. Gather groups of like shapes to earn points. The more shapes in a group, the more points you will earn. Groups must contain more than 3 of the same shape. You have 90 seconds to earn as many points as possible. Good Luck!"
+        android:fontFamily="tahoma"
+        android:textColor="#ffffff"
+        android:textSize="10pt"
+        android:layout_gravity="center"
+        android:textAlignment="center"
+        android:layout_marginTop="5mm"/>
+
+    <Button
+        android:id="@+id/main_button"
+        android:layout_width="120pt"
+        android:layout_height="wrap_content"
+        android:fontFamily="tahoma"
+        android:background="@color/colorAccent"
+        android:text="Main Menu"
+        android:textColor="#ffffff"
+        android:textStyle="bold"
+        android:textSize="15pt"
+        android:onClick="mainMenu"
+        android:elevation="19dp"
+        android:layout_gravity="center"
+        android:paddingBottom="0dp"
+        android:layout_marginTop="22mm"/>
 </LinearLayout>

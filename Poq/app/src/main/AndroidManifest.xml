@@ -16,6 +16,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".Poq"></activity>
+        <activity android:name=".Instructions"></activity>
     </application>
 
 
