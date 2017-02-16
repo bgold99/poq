@@ -17,7 +17,9 @@ import java.util.Timer;
 
 public class Poq extends AppCompatActivity {
     TextView second;
-    int timeRemaining = 91000;
+    int startTime = 91000;
+    public final static int EXTRA_STARTTIME = "graphics3d.Poq.STARTTIME";
+    long timeRemaining;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,26 +27,29 @@ public class Poq extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Intent intent = getIntent();
         second = (TextView) findViewById(R.id.seconds);
-
-        CountDownTimer timer = new CountDownTimer(timeRemaining, 1000) {
-
-            public void onTick(long millisUntilFinished) {
-                second.setText("Time: " + millisUntilFinished / 1000);
-            }
-
-            public void onFinish() {
-                second.setText("Time's Up!");
-            }
-
-        }.start();
-
+        startCountdown(startTime);
     }
 
     public void pause(View view){
+        startTime = (int)timeRemaining;
+        Intent intent = new Intent(this, Paused.class);
+        startActivity(intent);
     }
 
     public void main(View view){
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
+    }
+
+    private void startCountdown(int startTime){
+        CountDownTimer timer = new CountDownTimer(startTime, 1000) {
+            public void onTick(long millisUntilFinished) {
+                timeRemaining = millisUntilFinished/1000;
+                second.setText("Time: " + millisUntilFinished / 1000);
+            }
+            public void onFinish() {
+                second.setText("Time's Up!");
+            }
+        }.start();
     }
 }
