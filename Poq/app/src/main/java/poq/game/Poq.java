@@ -18,14 +18,17 @@ import java.util.Timer;
 public class Poq extends AppCompatActivity {
     TextView second;
     int startTime = 91000;
-    public final static int EXTRA_STARTTIME = "graphics3d.Poq.STARTTIME";
     long timeRemaining;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Intent intent = getIntent();
+
+        Intent intentIn = getIntent();
+        startTime = intentIn.getIntExtra("EXTRA_STARTTIME", 91000);
+        System.out.println(startTime*1000);
+
         second = (TextView) findViewById(R.id.seconds);
         startCountdown(startTime);
     }
@@ -33,6 +36,7 @@ public class Poq extends AppCompatActivity {
     public void pause(View view){
         startTime = (int)timeRemaining;
         Intent intent = new Intent(this, Paused.class);
+        intent.putExtra("EXTRA_STARTTIME", startTime);
         startActivity(intent);
     }
 
