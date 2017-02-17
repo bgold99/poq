@@ -17,13 +17,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-<<<<<<< HEAD
         <activity android:name=".Poq" />
         <activity android:name=".Paused"></activity>
-=======
-        <activity android:name=".Poq"></activity>
         <activity android:name=".Instructions"></activity>
->>>>>>> 800a2c325b8d881edc6e935024708530d124c9d8
     </application>
 
 </manifest>
