@@ -20,13 +20,8 @@
         android:onClick="play"
         android:elevation="19dp"
         android:paddingBottom="0dp"
-        android:layout_margin="120dp"
-        android:layout_marginBottom="0dp"
-        android:layout_marginEnd="0dp"
-        android:layout_marginLeft="0dp"
-        android:layout_marginRight="0dp"
-        android:layout_marginStart="130dp"
-        android:layout_marginTop="100dp" />
+        android:layout_gravity="center"
+        android:layout_margin="120dp" />
 
     <Button
         android:id="@+id/instructions_button"
@@ -40,13 +35,7 @@
         android:textSize="15pt"
         android:onClick="howTo"
         android:elevation="19dp"
-        android:paddingBottom="0dp"
-        android:layout_margin="60dp"
-        android:layout_marginBottom="0dp"
-        android:layout_marginEnd="0dp"
-        android:layout_marginLeft="0dp"
-        android:layout_marginRight="100dp"
-        android:layout_marginStart="5dp"
-        android:layout_marginTop="0dp" />
+        android:layout_gravity="center"
+        android:paddingBottom="0dp" />
 
 </LinearLayout>
