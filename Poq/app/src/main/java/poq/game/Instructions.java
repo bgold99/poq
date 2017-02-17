@@ -19,7 +19,7 @@ public class Instructions extends AppCompatActivity{
         Intent intent = getIntent();
     }
 
-
+    //Returns Viewer to Main Menu when Main Menu Button is Pressed
     public void mainMenu(View view){
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
