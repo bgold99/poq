@@ -52,6 +52,10 @@ public class Poq extends AppCompatActivity {
             }
             public void onFinish() {
                 second.setText("Time's Up!");
+                //**********************Should call GaveOver***************
+                //?? is the context
+                //Intent intentEnd = new Intent(??, GameOver.class);
+                //startActivity(intentEnd);
             }
         }.start();
     }

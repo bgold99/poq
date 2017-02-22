@@ -18,8 +18,9 @@
             </intent-filter>
         </activity>
         <activity android:name=".Poq" />
-        <activity android:name=".Paused"></activity>
-        <activity android:name=".Instructions"></activity>
+        <activity android:name=".Paused" />
+        <activity android:name=".Instructions" />
+        <activity android:name=".GameOver"></activity>
     </application>
 
 </manifest>
