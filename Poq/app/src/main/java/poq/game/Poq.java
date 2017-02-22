@@ -17,7 +17,7 @@ import java.util.Timer;
 
 public class Poq extends AppCompatActivity {
     TextView second;
-    int startTime = 91000;
+    int startTime = 91;
     long timeRemaining;
 
     @Override
@@ -26,8 +26,7 @@ public class Poq extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         Intent intentIn = getIntent();
-        startTime = intentIn.getIntExtra("EXTRA_STARTTIME", 91000);
-        System.out.println(startTime*1000);
+        startTime = 1000*intentIn.getIntExtra("EXTRA_STARTTIME", 91);
 
         second = (TextView) findViewById(R.id.seconds);
         startCountdown(startTime);
