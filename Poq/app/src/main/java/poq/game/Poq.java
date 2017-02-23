@@ -19,6 +19,7 @@ public class Poq extends AppCompatActivity {
     TextView second;
     int startTime = 91;
     long timeRemaining;
+    int score = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,10 +53,9 @@ public class Poq extends AppCompatActivity {
             }
             public void onFinish() {
                 second.setText("Time's Up!");
-                //**********************Should call GaveOver***************
-                //?? is the context
-                //Intent intentEnd = new Intent(??, GameOver.class);
-                //startActivity(intentEnd);
+                Intent intentEnd = new Intent(Poq.this, GameOver.class);
+                intentEnd.putExtra("EXTRA_SCORE", score);
+                startActivity(intentEnd);
             }
         }.start();
     }
