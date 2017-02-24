@@ -20,6 +20,7 @@ public class Poq extends AppCompatActivity {
     int startTime = 91; //the starttime of the countdown clock
     long timeRemaining;
     int score = 0;
+    boolean paused;
 
     //Changes the screen to activity_main (the main game)
     @Override
@@ -31,12 +32,14 @@ public class Poq extends AppCompatActivity {
         startTime = 1000*intentIn.getIntExtra("EXTRA_STARTTIME", 91);
 
         second = (TextView) findViewById(R.id.seconds);
+        paused = false;
         startCountdown(startTime);
     }
 
     //pauses the game and changes the screen when the pause button is pressed
     public void pause(View view){
         startTime = (int)timeRemaining;
+        paused = true;
         Intent intent = new Intent(this, Paused.class);
         intent.putExtra("EXTRA_STARTTIME", startTime);
         startActivity(intent);
@@ -56,10 +59,12 @@ public class Poq extends AppCompatActivity {
                 second.setText("Time: " + millisUntilFinished / 1000);
             }
             public void onFinish() {
-                second.setText("Time's Up!");
-                Intent intentEnd = new Intent(Poq.this, GameOver.class);
-                intentEnd.putExtra("EXTRA_SCORE", score);
-                startActivity(intentEnd);
+                if(paused==true){
+                    second.setText("Time's Up!");
+                    Intent intentEnd = new Intent(Poq.this, GameOver.class);
+                    intentEnd.putExtra("EXTRA_SCORE", score);
+                    startActivity(intentEnd);
+                }
             }
         }.start();
     }

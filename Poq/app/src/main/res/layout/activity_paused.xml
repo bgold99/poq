@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_paused"
     android:layout_width="match_parent"
@@ -8,19 +8,32 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    android:orientation="vertical"
     tools:context="poq.game.Paused">
 
-    <TextView
+    <TextView android:id="@+id/paused_text"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Game Paused"/>
+        android:layout_height="60dp"
+        android:textStyle="bold"
+        android:textSize="20pt"
+        android:fontFamily="tahoma"
+        android:text="Game Paused"
+        android:gravity="center"/>
 
     <Button android:id="@+id/resume"
+        android:layout_width="80pt"
         android:layout_height="wrap_content"
-        android:layout_width="wrap_content"
+        android:fontFamily="tahoma"
+        android:background="@color/colorAccent"
+        android:textColor="#ffffff"
+        android:textStyle="bold"
+        android:textSize="15pt"
+        android:layout_gravity="center"
         android:text="Resume"
-        android:onClick="resume">
+        android:onClick="resume"
+        android:layout_below="@+id/paused_text"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="80dp"
+        android:elevation="0dp">
     </Button>
 
-</LinearLayout>
+</RelativeLayout>
