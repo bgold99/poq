@@ -12,6 +12,7 @@ import android.view.Window;
 
 public class Instructions extends AppCompatActivity{
 
+    //Changes the screen to the instructions layout
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
