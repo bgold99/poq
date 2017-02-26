@@ -3,6 +3,7 @@ package poq.game;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Paint;
 import android.util.AttributeSet;
 import android.view.View;
 
@@ -17,7 +18,7 @@ import android.view.View;
 public class MyView extends View {
     int idX = 0; //default
     int idY = 0; //default
-    int idColor =0 ;//default
+    int idShape =0 ;//default
 
     //Set of colors in the grid
     public int colors[] = {
@@ -35,7 +36,7 @@ public class MyView extends View {
         super(context);
         idX = x;
         idY = y;
-        idColor = color;
+        idShape = color;
     }
 
     public MyView(Context context) {
@@ -52,8 +53,9 @@ public class MyView extends View {
 
     @Override
     public void onDraw(Canvas canvas){
-        //We can do more things here if we want
-        canvas.drawColor(colors[idColor]);
+        Paint p = new Paint();
+        p.setColor(colors[idShape]);
+        canvas.drawCircle(canvas.getWidth()/2, canvas.getHeight()/2, 30, p);
     }
 
     /**

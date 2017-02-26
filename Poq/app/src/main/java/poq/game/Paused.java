@@ -21,7 +21,7 @@ public class Paused extends AppCompatActivity {
     //Returns to the game when the resume button is pressed
     public void resume(View view){
         Intent intent = new Intent(this, Poq.class);
-        intent.putExtra("EXTRA_STARTTIME", startTime); //how much time is left in the game
+        intent.putExtra("EXTRA_STARTTIME", startTime+1); //how much time is left in the game
         startActivity(intent);
     }
 }
