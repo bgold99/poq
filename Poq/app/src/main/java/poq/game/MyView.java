@@ -7,6 +7,10 @@ import android.util.AttributeSet;
 import android.view.View;
 
 /**
+ * Class for an individual colored square within the grid.
+ * Has color and index characteristics.
+ * Gets drawn.
+ *
  * Created by arielfromm on 2/24/17.
  */
 
@@ -52,9 +56,18 @@ public class MyView extends View {
         canvas.drawColor(colors[idColor]);
     }
 
-
+    /**
+     * @return Number of colors possible in the grid
+     */
     public int getColorsLength() {
         return colors.length;
+    }
+
+    /**
+     * @return Location of the color of the current square in the array of possible colors
+     */
+    public int getIdColor() {
+        return idColor;
     }
 
 }
