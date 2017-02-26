@@ -9,31 +9,21 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="50pt">
-
-        <Button android:id="@+id/button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Pause"
-            android:onClick="pause"/>
+        android:layout_height="25pt">
 
         <TextView android:id="@+id/seconds"
             android:text="Time: 90"
+            android:textSize="15pt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1" />
 
         <TextView android:id="@+id/score"
             android:text="Score: "
+            android:textSize="15pt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1" />
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Exit"
-            android:onClick="main"/>
 
     </LinearLayout>
 
@@ -41,12 +31,34 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:id="@+id/GridLayout"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="240pt"
         android:columnCount="8"
         android:rowCount="8"
         android:orientation="horizontal"
         tools:context="poq.game.grid">
 
     </GridLayout>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="25pt">
+
+        <Button android:id="@+id/button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left"
+            android:text="Pause"
+            android:onClick="pause"/>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:text="Exit"
+            android:onClick="main"/>
+
+    </LinearLayout>
 
 </LinearLayout>
