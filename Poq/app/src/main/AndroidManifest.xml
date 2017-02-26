@@ -10,22 +10,28 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".MainActivity"
-            android:label="Main Menu">
+            android:label="Main Menu"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Poq" />
-        <activity android:name=".Paused" />
-        <activity android:name=".Instructions" />
-        <activity android:name=".grid">
+        <activity android:name=".Poq"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".Paused"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".Instructions"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".grid"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".GameOver"></activity>
+        <activity android:name=".GameOver"
+            android:screenOrientation="portrait"></activity>
     </application>
 
 </manifest>

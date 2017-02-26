@@ -3,7 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:screenOrientation="portrait">
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
@@ -12,7 +13,7 @@
         android:layout_height="25pt">
 
         <TextView android:id="@+id/seconds"
-            android:text="Time: 90"
+            android:text=" Time: 90"
             android:textSize="15pt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -31,7 +32,7 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:id="@+id/GridLayout"
         android:layout_width="wrap_content"
-        android:layout_height="240pt"
+        android:layout_height="220pt"
         android:columnCount="8"
         android:rowCount="8"
         android:orientation="horizontal"
@@ -48,14 +49,13 @@
         <Button android:id="@+id/button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="left"
             android:text="Pause"
             android:onClick="pause"/>
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="right"
+            android:layout_marginLeft="185dp"
             android:text="Exit"
             android:onClick="main"/>
 

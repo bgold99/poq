@@ -125,13 +125,13 @@ public class Poq extends AppCompatActivity {
         CountDownTimer timer = new CountDownTimer(startTime, 1000) {
             public void onTick(long millisUntilFinished) {
                 timeRemaining = millisUntilFinished/1000;
-                second.setText("Time: " + millisUntilFinished / 1000);
+                second.setText(" Time: " + millisUntilFinished / 1000);
             }
             public void onFinish() {
-                second.setText("Time's Up!");
-                Intent intentEnd = new Intent(Poq.this, GameOver.class);
-                intentEnd.putExtra("EXTRA_SCORE", score);
-                startActivity(intentEnd);
+                second.setText(" Time's Up!");
+                Intent intentEndGame = new Intent(Poq.this, GameOver.class);
+                intentEndGame.putExtra("EXTRA_SCORE", score);
+                startActivity(intentEndGame);
             }
         }.start();
     }
