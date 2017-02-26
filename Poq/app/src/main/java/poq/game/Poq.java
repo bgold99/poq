@@ -29,7 +29,7 @@ public class Poq extends AppCompatActivity {
     int score = 0;
     public MyView[] boxes = new MyView[64];
     public GridLayout gridLayout;
-    private float x1 = 0, y1 = 0;
+    private float x1 = 0, y1 = 0, rX1 = 0, rY1 = 0;
     private float x2, y2;
     static final int MIN_DISTANCE = 150;
 
@@ -192,6 +192,9 @@ public class Poq extends AppCompatActivity {
         }
     }
 
+    /*Checks which direction the user swiped
+    Code altered from code retrieved from StackOverflow user2999943
+     */
     @Override
     public boolean onTouchEvent(MotionEvent event){
         TextView score = (TextView) findViewById(R.id.score);
@@ -199,6 +202,8 @@ public class Poq extends AppCompatActivity {
             case MotionEvent.ACTION_DOWN:
                 x1 = event.getX();
                 y1 = event.getY();
+                rX1 = event.getRawX();
+                rY1 = event.getRawY();
                 break;
             case MotionEvent.ACTION_UP:
                 x2 = event.getX();
@@ -206,24 +211,26 @@ public class Poq extends AppCompatActivity {
                 float deltaX = x2 - x1;
                 float deltaY = y2 - y1;
 
-                if (Math.abs(deltaX) > MIN_DISTANCE){
+                if (Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX)>MIN_DISTANCE) {
                     // Left to Right swipe action
-                    if (x2 > x1 && Math.abs(deltaX) > Math.abs(deltaY)) {
+                    if (x2 > x1) {
                         score.setText("Right");
                     }
 
                     // Right to left swipe action
-                    else if(x1 < x2 && Math.abs(deltaX) > Math.abs(deltaY)){
+                    else {
                         score.setText("Left");
                     }
+                }
 
+                if (Math.abs(deltaY)>Math.abs(deltaX) && Math.abs(deltaY)>MIN_DISTANCE){
                     //Up swipe action
-                    else if(y2>y1 && Math.abs(deltaY) > Math.abs(deltaX)){
+                    if(y1>y2){
                         score.setText("Up");
                     }
 
                     //Down swipe action
-                    else if(y1<y2 && Math.abs(deltaY) > Math.abs(deltaX)){
+                    else {
                         score.setText("down");
                     }
 
