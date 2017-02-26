@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimary"
+
+    >
+
+
+    <Button
+        android:id="@+id/play_button"
+        android:layout_width="70pt"
+        android:layout_height="wrap_content"
+        android:fontFamily="tahoma"
+        android:background="@color/colorAccent"
+        android:text="Play"
+        android:textColor="#ffffff"
+        android:textStyle="bold"
+        android:textSize="20pt"
+        android:onClick="play"
+        android:elevation="19dp"
+        android:paddingBottom="0dp"
+        android:layout_gravity="center"
+        android:layout_margin="120dp" />
+
+    <Button
+        android:id="@+id/instructions_button"
+        android:layout_width="120pt"
+        android:layout_height="wrap_content"
+        android:fontFamily="tahoma"
+        android:background="@color/colorAccent"
+        android:text="Instructions"
+        android:textColor="#ffffff"
+        android:textStyle="bold"
+        android:textSize="15pt"
+        android:onClick="howTo"
+        android:elevation="19dp"
+        android:layout_gravity="center"
+        android:paddingBottom="0dp" />
+
+</LinearLayout>
