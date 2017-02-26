@@ -20,6 +20,11 @@
         <activity android:name=".Poq" />
         <activity android:name=".Paused" />
         <activity android:name=".Instructions" />
+        <activity android:name=".grid">
+            <intent-filter>
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity android:name=".GameOver"></activity>
     </application>
 
