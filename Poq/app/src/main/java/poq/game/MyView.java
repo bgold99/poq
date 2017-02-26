@@ -23,12 +23,12 @@ public class MyView extends View {
     //Set of colors in the grid
     public int colors[] = {
             Color.rgb(77, 195, 255),    //light blue
-            Color.rgb(255, 102, 217),     //light pink
+           // Color.rgb(255, 102, 217),     //light pink
             Color.rgb(153, 51, 255),       //purple
-            //Color.rgb(0, 51, 204),       //dark blue
-            //4Color.rgb(102, 255, 153),        //light green
-            Color.rgb(89, 0, 179),      //dark purple
-            Color.rgb(255, 51, 0),       //dark orange
+            Color.rgb(0, 51, 204),       //dark blue
+           // Color.rgb(102, 255, 153),        //light green
+            //Color.rgb(89, 0, 179),      //dark purple
+           // Color.rgb(255, 51, 0),       //dark orange
             Color.rgb(255, 0, 102)      //darker pink
     };
 
@@ -55,7 +55,24 @@ public class MyView extends View {
     public void onDraw(Canvas canvas){
         Paint p = new Paint();
         p.setColor(colors[idShape]);
-        canvas.drawCircle(canvas.getWidth()/2, canvas.getHeight()/2, 30, p);
+        if(idShape == 0) canvas.drawCircle(canvas.getWidth()/2, canvas.getHeight()/2, 50, p);
+        else if(idShape == 1) canvas.drawRect(canvas.getWidth()/2-45, canvas.getHeight()/2-45, canvas.getWidth()/2+45, canvas.getHeight()/2+45, p);
+        else if(idShape == 2){
+            float[] points = {canvas.getWidth()/2,canvas.getHeight()/2-45,canvas.getWidth()/2+45,canvas.getHeight()/2+45,
+                    canvas.getWidth()/2+45,canvas.getHeight()/2+45, canvas.getWidth()/2-45, canvas.getHeight()/2+45,
+                    canvas.getWidth()/2-45, canvas.getHeight()/2+45, canvas.getWidth()/2,canvas.getHeight()/2-45};
+            p.setStrokeWidth(10);
+            canvas.drawLines(points, p);
+        }
+        else {
+            float[] points = {canvas.getWidth()/2,canvas.getHeight()/2-45,canvas.getWidth()/2+45,canvas.getHeight()/2,
+                    canvas.getWidth()/2+45,canvas.getHeight()/2, canvas.getWidth()/2,canvas.getHeight()/2+45,
+                    canvas.getWidth()/2,canvas.getHeight()/2+45, canvas.getWidth()/2-45,canvas.getHeight()/2,
+                    canvas.getWidth()/2-45,canvas.getHeight()/2, canvas.getWidth()/2,canvas.getHeight()/2-45};
+            p.setStrokeWidth(10);
+            canvas.drawLines(points, p);
+        }
+
     }
 
     /**
@@ -69,7 +86,7 @@ public class MyView extends View {
      * @return Location of the color of the current square in the array of possible colors
      */
     public int getIdColor() {
-        return idColor;
+        return idShape;
     }
 
 
