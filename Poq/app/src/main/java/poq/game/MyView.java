@@ -70,4 +70,5 @@ public class MyView extends View {
         return idColor;
     }
 
+
 }

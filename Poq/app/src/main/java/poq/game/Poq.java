@@ -1,8 +1,12 @@
 package poq.game;
 
+import android.graphics.Path;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
+import android.support.v4.view.MotionEventCompat;
+import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.widget.GridLayout;
@@ -25,6 +29,10 @@ public class Poq extends AppCompatActivity {
     int score = 0;
     public MyView[] boxes = new MyView[64];
     public GridLayout gridLayout;
+    private float x1 = 0, y1 = 0;
+    private float x2, y2;
+    static final int MIN_DISTANCE = 150;
+
 
     //Changes the screen to activity_main (the main game)
     @Override
@@ -182,6 +190,51 @@ public class Poq extends AppCompatActivity {
                 }
             }
         }
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event){
+        TextView score = (TextView) findViewById(R.id.score);
+        switch(event.getAction()) {
+            case MotionEvent.ACTION_DOWN:
+                x1 = event.getX();
+                y1 = event.getY();
+                break;
+            case MotionEvent.ACTION_UP:
+                x2 = event.getX();
+                y2 = event.getY();
+                float deltaX = x2 - x1;
+                float deltaY = y2 - y1;
+
+                if (Math.abs(deltaX) > MIN_DISTANCE){
+                    // Left to Right swipe action
+                    if (x2 > x1 && Math.abs(deltaX) > Math.abs(deltaY)) {
+                        score.setText("Right");
+                    }
+
+                    // Right to left swipe action
+                    else if(x1 < x2 && Math.abs(deltaX) > Math.abs(deltaY)){
+                        score.setText("Left");
+                    }
+
+                    //Up swipe action
+                    else if(y2>y1 && Math.abs(deltaY) > Math.abs(deltaX)){
+                        score.setText("Up");
+                    }
+
+                    //Down swipe action
+                    else if(y1<y2 && Math.abs(deltaY) > Math.abs(deltaX)){
+                        score.setText("down");
+                    }
+
+                }
+                else
+                {
+                    // consider as something else - a screen tap for example
+                }
+                break;
+        }
+        return super.onTouchEvent(event);
     }
 }
 
