@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Path;
 import android.util.AttributeSet;
 import android.view.View;
 
@@ -58,19 +59,23 @@ public class MyView extends View {
         if(idShape == 0) canvas.drawCircle(canvas.getWidth()/2, canvas.getHeight()/2, 50, p);
         else if(idShape == 1) canvas.drawRect(canvas.getWidth()/2-45, canvas.getHeight()/2-45, canvas.getWidth()/2+45, canvas.getHeight()/2+45, p);
         else if(idShape == 2){
-            float[] points = {canvas.getWidth()/2,canvas.getHeight()/2-45,canvas.getWidth()/2+45,canvas.getHeight()/2+45,
-                    canvas.getWidth()/2+45,canvas.getHeight()/2+45, canvas.getWidth()/2-45, canvas.getHeight()/2+45,
-                    canvas.getWidth()/2-45, canvas.getHeight()/2+45, canvas.getWidth()/2,canvas.getHeight()/2-45};
-            p.setStrokeWidth(10);
-            canvas.drawLines(points, p);
+            Path triangle = new Path();
+            triangle.moveTo(canvas.getWidth()/2,canvas.getHeight()/2-45);
+            triangle.lineTo(canvas.getWidth()/2+45,canvas.getHeight()/2+45);
+            triangle.lineTo(canvas.getWidth()/2-45, canvas.getHeight()/2+45);
+            triangle.lineTo(canvas.getWidth()/2,canvas.getHeight()/2-45);
+            p.setStyle(Paint.Style.FILL);
+            canvas.drawPath(triangle, p);
         }
         else {
-            float[] points = {canvas.getWidth()/2,canvas.getHeight()/2-45,canvas.getWidth()/2+45,canvas.getHeight()/2,
-                    canvas.getWidth()/2+45,canvas.getHeight()/2, canvas.getWidth()/2,canvas.getHeight()/2+45,
-                    canvas.getWidth()/2,canvas.getHeight()/2+45, canvas.getWidth()/2-45,canvas.getHeight()/2,
-                    canvas.getWidth()/2-45,canvas.getHeight()/2, canvas.getWidth()/2,canvas.getHeight()/2-45};
-            p.setStrokeWidth(10);
-            canvas.drawLines(points, p);
+            Path diamond = new Path();
+            diamond.moveTo(canvas.getWidth()/2,canvas.getHeight()/2-50);
+            diamond.lineTo(canvas.getWidth()/2+50,canvas.getHeight()/2);
+            diamond.lineTo(canvas.getWidth()/2,canvas.getHeight()/2+50);
+            diamond.lineTo(canvas.getWidth()/2-50,canvas.getHeight()/2);
+            diamond.lineTo(canvas.getWidth()/2,canvas.getHeight()/2-50);
+            p.setStyle(Paint.Style.FILL);
+            canvas.drawPath(diamond, p);
         }
 
     }
