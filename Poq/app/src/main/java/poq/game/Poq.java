@@ -15,6 +15,7 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Timer;
 
@@ -281,6 +282,46 @@ public class Poq extends AppCompatActivity {
             intArr[j] = matchPos.get(j).intValue();
         }
         return intArr;
+    }
+
+    public int[] disappearingMatch(int[] shape){
+        Arrays.sort(shape);
+        ArrayList<Integer> delete = new ArrayList<Integer>();
+        //check for horizontal matches
+        int i=0;
+        int j;
+        while(i<shape.length){
+            if(shape[i]+1==shape[i+1] && shape[i+1]+1==shape[i+2]){ //if three positions are sequential
+                delete.add(shape[i]);
+                delete.add(shape[i+1]);
+                delete.add(shape[i+2]);
+                j = i+2;
+                if(shape[i+2]+1==shape[i+3]){   //if the fourth is also sequential
+                    delete.add(shape[i+3]);
+                    j = i+3;
+                    if(shape[i+3]+1==shape[i+4]) {  //if the fifth is also sequential
+                        delete.add(shape[i + 4]);
+                        j=i+4;
+                    }
+                }
+            } else {j = i+1;}
+            i = j;
+        }
+
+        //TODO: check for vertical matches
+        int[] shape2 = new int[shape.length];
+        for(i = 0; i<shape.length; i++){
+            shape2[i] = shape[i]%8;
+        }
+        i=1;
+        Arrays.sort(shape2);
+
+        //convert ArrayList to integer array for returning
+        int[] deleteArr = new int[delete.size()];
+        for (int k=0; k < deleteArr.length; k++){
+            deleteArr[k] = delete.get(k).intValue();
+        }
+        return deleteArr;
     }
 }
 
