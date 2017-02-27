@@ -1,5 +1,6 @@
 package poq.game;
 
+import android.graphics.Color;
 import android.graphics.Path;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -16,6 +17,7 @@ import android.support.v7.app.AppCompatActivity;
 
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Random;
 import java.util.Timer;
 
 
@@ -219,7 +221,7 @@ public class Poq extends AppCompatActivity {
                 if (Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX)>MIN_DISTANCE) {
                     // Left to Right swipe action
                     if (x2 > x1) {
-                        score.setText("Right");
+                        
                     }
 
                     // Right to left swipe action
@@ -281,6 +283,23 @@ public class Poq extends AppCompatActivity {
             intArr[j] = matchPos.get(j).intValue();
         }
         return intArr;
+    }
+
+    public void animateGravity(int[] deletedBoxes){
+        for (int i = 0; i < deletedBoxes.length; i++){
+            int subtract = 8;
+            boxes[deletedBoxes[i]] = boxes[deletedBoxes[i]-subtract];
+            subtract += 8;
+            while (deletedBoxes[i] - subtract >= 0){
+                boxes[deletedBoxes[i]-subtract+8] = boxes[deletedBoxes[i]-subtract];
+                subtract += 8;
+            }
+
+            int colorsLength = boxes[0].getColorsLength();
+            int newColor = (int) (Math.random()*colorsLength);
+            boxes[deletedBoxes[i%8]] = new MyView(this, i%8, 0, newColor);
+        }
+
     }
 }
 
