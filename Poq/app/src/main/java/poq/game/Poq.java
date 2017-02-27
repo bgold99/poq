@@ -32,7 +32,7 @@ public class Poq extends AppCompatActivity {
     private float x1 = 0, y1 = 0, rX1 = 0, rY1 = 0;
     private float x2, y2;
     static final int MIN_DISTANCE = 150;
-
+    boolean paused;
 
     //Changes the screen to activity_main (the main game)
     @Override
@@ -103,12 +103,14 @@ public class Poq extends AppCompatActivity {
         Intent intentIn = getIntent();
         startTime = 1000*intentIn.getIntExtra("EXTRA_STARTTIME", 91);
         second = (TextView) findViewById(R.id.seconds);
+        paused = false;
         startCountdown(startTime);
     }
 
     //pauses the game and changes the screen when the pause button is pressed
     public void pause(View view){
         startTime = (int)timeRemaining;
+        paused = true;
         Intent intent = new Intent(this, Paused.class);
         intent.putExtra("EXTRA_STARTTIME", startTime);
         startActivity(intent);
@@ -132,6 +134,12 @@ public class Poq extends AppCompatActivity {
                 Intent intentEndGame = new Intent(Poq.this, GameOver.class);
                 intentEndGame.putExtra("EXTRA_SCORE", score);
                 startActivity(intentEndGame);
+
+                if(paused==true){
+                    second.setText("Time's Up!");
+                    Intent intentEnd = new Intent(Poq.this, GameOver.class);
+                    intentEnd.putExtra("EXTRA_SCORE", score);
+                    startActivity(intentEnd);
             }
         }.start();
     }
