@@ -14,6 +14,7 @@ import android.widget.TextView;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Timer;
 
@@ -235,7 +236,7 @@ public class Poq extends AppCompatActivity {
 
                     //Down swipe action
                     else {
-                        score.setText("down");
+                        score.setText("Down");
                     }
 
                 }
@@ -246,6 +247,40 @@ public class Poq extends AppCompatActivity {
                 break;
         }
         return super.onTouchEvent(event);
+    }
+
+    public int[] checkForMatch(int xPos, int yPos){
+        ArrayList<Integer> matchPos = new ArrayList<Integer>();   //to be filled with adjacent positions (1-64) of the same shape
+        int i=1;
+        //keeps going left until not the same color or hits the border
+        while(xPos-i!=-1 && boxes[yPos*8 + xPos - (i-1)].getIdColor()==boxes[yPos*8 + xPos - i].getIdColor()) {
+            matchPos.add(yPos * 8 + xPos - i);
+            i++;
+        }
+        i=1;
+        //keeps going right until not the same color or hits the border
+        while(xPos+i!=8 && boxes[yPos*8 + xPos + (i-1)].getIdColor()==boxes[yPos*8 + xPos + i].getIdColor()){
+            matchPos.add(yPos*8+xPos+i);
+            i++;
+        }
+        i=1;
+        //keeps going up until not the same color or hits the border
+        while (yPos-i!=-1 && boxes[(yPos-i)*8 + xPos].getIdColor()==boxes[(yPos-i+1)*8 + xPos].getIdColor()){
+            matchPos.add((yPos-i)*8+xPos);
+            i++;
+        }
+        i=1;
+        //keeps going down until not the same color or hits the border
+        while (yPos+i!=8 && boxes[(yPos+i)*8 + xPos].getIdColor()==boxes[(yPos+i-1)*8 + xPos].getIdColor()){
+            matchPos.add((yPos+i)*8+xPos);
+            i++;
+        }
+        //convert ArrayList to integer array for returning
+        int[] intArr = new int[matchPos.size()];
+        for (int j=0; j < intArr.length; j++){
+            intArr[j] = matchPos.get(j).intValue();
+        }
+        return intArr;
     }
 }
 

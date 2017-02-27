@@ -17,14 +17,16 @@
             android:textSize="15pt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            android:gravity="center"/>
 
         <TextView android:id="@+id/score"
             android:text="Score: "
             android:textSize="15pt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            android:gravity="center"/>
 
     </LinearLayout>
 
