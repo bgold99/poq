@@ -249,7 +249,7 @@ public class Poq extends AppCompatActivity {
         return super.onTouchEvent(event);
     }
 
-    public int[] checkForMatch(int xPos, int yPos){
+    public int[] findAdjacentMatch(int xPos, int yPos){
         ArrayList<Integer> matchPos = new ArrayList<Integer>();   //to be filled with adjacent positions (1-64) of the same shape
         int i=1;
         //keeps going left until not the same color or hits the border
