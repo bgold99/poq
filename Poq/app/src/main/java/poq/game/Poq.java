@@ -287,6 +287,7 @@ public class Poq extends AppCompatActivity {
     public int[] disappearingMatch(int[] shape){
         Arrays.sort(shape);
         ArrayList<Integer> delete = new ArrayList<Integer>();
+        
         //check for horizontal matches
         int i=0;
         int j;
@@ -308,13 +309,22 @@ public class Poq extends AppCompatActivity {
             i = j;
         }
 
-        //TODO: check for vertical matches
-        int[] shape2 = new int[shape.length];
+        //check for vertical matches
+        int[][] shape2D = new int[shape.length][2];
         for(i = 0; i<shape.length; i++){
-            shape2[i] = shape[i]%8;
+            shape2D[i][0] = shape[i];
+            shape2D[i][1] = shape[i]%8;
         }
-        i=1;
-        Arrays.sort(shape2);
+        int count = 0;
+        for(j=0;j<shape.length;j++){
+            for(i=0;i<shape.length; i++){
+                if(shape2D[i][1]==shape2D[j][1]) count++;
+            }
+            if(count<3) shape2D[j][1]= -1;
+        }
+        for(i=0;i<shape.length;i++){
+            if(shape2D[j][1]!=-1) delete.add(shape2D[j][0]);
+        }
 
         //convert ArrayList to integer array for returning
         int[] deleteArr = new int[delete.size()];
