@@ -225,8 +225,8 @@ public class Poq extends AppCompatActivity {
                 if (Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX)>MIN_DISTANCE) {
                     // Left to Right swipe action
                     if (x2 > x1) {
-                        score.setText("Right");
                         int id1 = getGridIndex(x1, y1);
+                        score.setText("Right "+id1);
                         if (id1%8<7 && id1>0) {
                             animateSwap(id1, id1 + 1);
                         }
@@ -234,19 +234,32 @@ public class Poq extends AppCompatActivity {
 
                     // Right to left swipe action
                     else {
-                        score.setText("Left");
+                        int id1 = getGridIndex(x1, y1);
+                        score.setText("Left "+id1);
+                        if (id1%8>0 && id1>0) {
+                            animateSwap(id1, id1 - 1);
+                        }
+
                     }
                 }
 
                 if (Math.abs(deltaY)>Math.abs(deltaX) && Math.abs(deltaY)>MIN_DISTANCE){
                     //Up swipe action
                     if(y1>y2){
-                        score.setText("Up");
+                        int id1 = getGridIndex(x1, y1);
+                        score.setText("Up "+id1);
+                        if ((id1-id1%8)/8>0 && id1>0) {     //if not in top row
+                            animateSwap(id1, id1 - 8);
+                        }
                     }
 
                     //Down swipe action
                     else {
-                        score.setText("Down");
+                        int id1 = getGridIndex(x1, y1);
+                        score.setText("Down "+id1);
+                        if ((id1-id1%8)/8<7 && id1>0) {     //if not in bottom row
+                            animateSwap(id1, id1 + 8);
+                        }
                     }
 
                 }
@@ -283,13 +296,14 @@ public class Poq extends AppCompatActivity {
         int x2 = id2%8;
         int y2 = (id2-x2)/8;
 
-        gridLayout.removeViewAt(id1);
-        gridLayout.removeViewAt(id2);
-
+        //gridLayout.removeViewAt(id1);
+        //gridLayout.removeViewAt(id2);
+        gridLayout.removeViewsInLayout(id1, 1);
         boxes[id1] = new MyView(this, x1, y1, colorId2);
-        boxes[id2] = new MyView(this, x2, y2, colorId1);
-        
         gridLayout.addView(boxes[id1], id1);
+
+        gridLayout.removeViewsInLayout(id2, 1);
+        boxes[id2] = new MyView(this, x2, y2, colorId1);
         gridLayout.addView(boxes[id2], id2);
     }
 
