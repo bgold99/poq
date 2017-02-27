@@ -269,7 +269,7 @@ public class Poq extends AppCompatActivity {
     }
 
     public void animateSwap(int id1, int id2){
-        //TODO
+
     }
 
     public int[] findAdjacentMatch(int xPos, int yPos){
