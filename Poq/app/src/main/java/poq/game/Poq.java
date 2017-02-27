@@ -11,6 +11,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.widget.GridLayout;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -32,6 +33,7 @@ public class Poq extends AppCompatActivity {
     int score = 0;
     public MyView[] boxes = new MyView[64];
     public GridLayout gridLayout;
+    public LinearLayout linearLayout;
     private float x1 = 0, y1 = 0, rX1 = 0, rY1 = 0;
     private float x2, y2;
     static final int MIN_DISTANCE = 150;
@@ -44,6 +46,7 @@ public class Poq extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         gridLayout = (GridLayout) findViewById(R.id.GridLayout);
+        linearLayout = (LinearLayout) findViewById(R.id.LinearLayout);
 
         boxes[0] = new MyView(this, 0, 0, 0);   //initializing to avoid null object reference error
         for (int i=0; i<8; i++) {
@@ -249,6 +252,20 @@ public class Poq extends AppCompatActivity {
                 break;
         }
         return super.onTouchEvent(event);
+    }
+
+    /**
+     * Given a pixel location clicked within the grid, this method returns the index of the
+     * box in the grid. This indices go from 0 to 7 from left to right in the first row and
+     * increase going down.
+     * @param xPix The x coordinate in pixels of the pixel clicked
+     * @param yPix The y coordinate in pixels of the pixel clicked
+     * @return index of the box clicked within the grid
+     */
+    public int getGridIndex(float xPix, float yPix){
+        int xPos = (int) (xPix/gridLayout.getWidth()*8);
+        int yPos = (int) ((yPix-linearLayout.getHeight()-getSupportActionBar().getHeight())/gridLayout.getHeight()*8);
+        return yPos*8+xPos;
     }
 
     public int[] findAdjacentMatch(int xPos, int yPos){
