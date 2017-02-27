@@ -225,7 +225,11 @@ public class Poq extends AppCompatActivity {
                 if (Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX)>MIN_DISTANCE) {
                     // Left to Right swipe action
                     if (x2 > x1) {
-                        
+                        score.setText("Right");
+                        int id1 = getGridIndex(x1, y1);
+                        if (id1%8<7 && id1>0) {
+                            animateSwap(id1, id1 + 1);
+                        }
                     }
 
                     // Right to left swipe action
@@ -252,6 +256,7 @@ public class Poq extends AppCompatActivity {
                 }
                 break;
         }
+
         return super.onTouchEvent(event);
     }
 
@@ -270,7 +275,22 @@ public class Poq extends AppCompatActivity {
     }
 
     public void animateSwap(int id1, int id2){
+        System.out.println(id1+" "+id2);
+        int colorId1 = boxes[id1].getIdColor();
+        int colorId2 = boxes[id2].getIdColor();
+        int x1 = id1%8;
+        int y1 = (id1-x1)/8;
+        int x2 = id2%8;
+        int y2 = (id2-x2)/8;
 
+        gridLayout.removeViewAt(id1);
+        gridLayout.removeViewAt(id2);
+
+        boxes[id1] = new MyView(this, x1, y1, colorId2);
+        boxes[id2] = new MyView(this, x2, y2, colorId1);
+        
+        gridLayout.addView(boxes[id1], id1);
+        gridLayout.addView(boxes[id2], id2);
     }
 
     public int[] findAdjacentMatch(int xPos, int yPos){
