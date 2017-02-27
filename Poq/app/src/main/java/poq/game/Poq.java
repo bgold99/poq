@@ -32,7 +32,7 @@ public class Poq extends AppCompatActivity {
     private float x1 = 0, y1 = 0, rX1 = 0, rY1 = 0;
     private float x2, y2;
     static final int MIN_DISTANCE = 150;
-    boolean paused;
+    boolean paused=true;
 
     //Changes the screen to activity_main (the main game)
     @Override
@@ -118,6 +118,7 @@ public class Poq extends AppCompatActivity {
 
     //returns the player to the main menu
     public void main(View view){
+        paused = true;
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
     }

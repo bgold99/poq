@@ -2,13 +2,13 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorPrimary"
+    android:background="@color/colorPrimaryLight"
     android:screenOrientation="portrait">
 
     <TextView
         android:layout_width="140pt"
         android:layout_height="wrap_content"
-        android:text="Swipe across two shapes to swap them. Gather groups of like shapes to earn points. The more shapes in a group, the more points you will earn. Groups must contain more than 3 of the same shape. You have 90 seconds to earn as many points as possible. Good Luck!"
+        android:text="Your goal is to get matches of 3 or more shapes in a row. Swipe to swap two shapes. If you don't make a match, the pieces will return to their original positions. You earn more points for matching more shapes, and have 90 seconds to earn as many points as possible.\n\nGood Luck!"
         android:fontFamily="tahoma"
         android:textColor="#ffffff"
         android:textSize="10pt"
