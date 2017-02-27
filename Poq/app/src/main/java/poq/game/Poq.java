@@ -268,6 +268,10 @@ public class Poq extends AppCompatActivity {
         return yPos*8+xPos;
     }
 
+    public void animateSwap(int id1, int id2){
+        //TODO
+    }
+
     public int[] findAdjacentMatch(int xPos, int yPos){
         ArrayList<Integer> matchPos = new ArrayList<Integer>();   //to be filled with adjacent positions (1-64) of the same shape
         int i=1;
