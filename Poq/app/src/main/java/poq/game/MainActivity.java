@@ -12,6 +12,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_menu);
+        getSupportActionBar().setTitle("Main Menu");
     }
 
     //Takes Player to Game(Poq Class) when Play button is pressed

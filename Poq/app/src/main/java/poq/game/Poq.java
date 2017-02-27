@@ -130,11 +130,6 @@ public class Poq extends AppCompatActivity {
                 second.setText(" Time: " + millisUntilFinished / 1000);
             }
             public void onFinish() {
-                second.setText(" Time's Up!");
-                Intent intentEndGame = new Intent(Poq.this, GameOver.class);
-                intentEndGame.putExtra("EXTRA_SCORE", score);
-                startActivity(intentEndGame);
-
                 if(paused!=true){
                     second.setText("Time's Up!");
                     Intent intentEnd = new Intent(Poq.this, GameOver.class);
