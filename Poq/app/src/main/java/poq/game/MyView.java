@@ -68,7 +68,7 @@ public class MyView extends View {
             canvas.drawPath(triangle, p);
         }
         //diamond:
-        else {
+        else if(idShape==3) {
             Path diamond = new Path();
             diamond.moveTo(canvas.getWidth()/2,canvas.getHeight()/2-50);
             diamond.lineTo(canvas.getWidth()/2+50,canvas.getHeight()/2);
@@ -77,6 +77,9 @@ public class MyView extends View {
             diamond.lineTo(canvas.getWidth()/2,canvas.getHeight()/2-50);
             p.setStyle(Paint.Style.FILL);
             canvas.drawPath(diamond, p);
+        }
+        else{
+            //draw nothing
         }
     }
 

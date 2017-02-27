@@ -1,5 +1,6 @@
 package poq.game;
 
+import android.graphics.Color;
 import android.graphics.Path;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -10,6 +11,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.widget.GridLayout;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -17,6 +19,7 @@ import android.support.v7.app.AppCompatActivity;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.Random;
 import java.util.Timer;
 
 
@@ -31,6 +34,7 @@ public class Poq extends AppCompatActivity {
     int score = 0;
     public MyView[] boxes = new MyView[64];
     public GridLayout gridLayout;
+    public LinearLayout linearLayout;
     private float x1 = 0, y1 = 0, rX1 = 0, rY1 = 0;
     private float x2, y2;
     static final int MIN_DISTANCE = 150;
@@ -43,6 +47,7 @@ public class Poq extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         gridLayout = (GridLayout) findViewById(R.id.GridLayout);
+        linearLayout = (LinearLayout) findViewById(R.id.LinearLayoutTop);
 
         boxes[0] = new MyView(this, 0, 0, 0);   //initializing to avoid null object reference error
         for (int i=0; i<8; i++) {
@@ -220,7 +225,7 @@ public class Poq extends AppCompatActivity {
                 if (Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX)>MIN_DISTANCE) {
                     // Left to Right swipe action
                     if (x2 > x1) {
-                        score.setText("Right");
+                        
                     }
 
                     // Right to left swipe action
@@ -248,6 +253,24 @@ public class Poq extends AppCompatActivity {
                 break;
         }
         return super.onTouchEvent(event);
+    }
+
+    /**
+     * Given a pixel location clicked within the grid, this method returns the index of the
+     * box in the grid. This indices go from 0 to 7 from left to right in the first row and
+     * increase going down.
+     * @param xPix The x coordinate in pixels of the pixel clicked
+     * @param yPix The y coordinate in pixels of the pixel clicked
+     * @return index of the box clicked within the grid
+     */
+    public int getGridIndex(float xPix, float yPix){
+        int xPos = (int) (xPix/gridLayout.getWidth()*8);
+        int yPos = (int) ((yPix-linearLayout.getHeight()-getSupportActionBar().getHeight())/gridLayout.getHeight()*8);
+        return yPos*8+xPos;
+    }
+
+    public void animateSwap(int id1, int id2){
+
     }
 
     public int[] findAdjacentMatch(int xPos, int yPos){
@@ -284,54 +307,72 @@ public class Poq extends AppCompatActivity {
         return intArr;
     }
 
-    public int[] disappearingMatch(int[] shape){
+    public int[] disappearingMatch(int[] shape) {
         Arrays.sort(shape);
         ArrayList<Integer> delete = new ArrayList<Integer>();
-        
+
         //check for horizontal matches
-        int i=0;
+        int i = 0;
         int j;
-        while(i<shape.length){
-            if(shape[i]+1==shape[i+1] && shape[i+1]+1==shape[i+2]){ //if three positions are sequential
+        while (i < shape.length) {
+            if (shape[i] + 1 == shape[i + 1] && shape[i + 1] + 1 == shape[i + 2]) { //if three positions are sequential
                 delete.add(shape[i]);
-                delete.add(shape[i+1]);
-                delete.add(shape[i+2]);
-                j = i+2;
-                if(shape[i+2]+1==shape[i+3]){   //if the fourth is also sequential
-                    delete.add(shape[i+3]);
-                    j = i+3;
-                    if(shape[i+3]+1==shape[i+4]) {  //if the fifth is also sequential
+                delete.add(shape[i + 1]);
+                delete.add(shape[i + 2]);
+                j = i + 2;
+                if (shape[i + 2] + 1 == shape[i + 3]) {   //if the fourth is also sequential
+                    delete.add(shape[i + 3]);
+                    j = i + 3;
+                    if (shape[i + 3] + 1 == shape[i + 4]) {  //if the fifth is also sequential
                         delete.add(shape[i + 4]);
-                        j=i+4;
+                        j = i + 4;
                     }
                 }
-            } else {j = i+1;}
+            } else {
+                j = i + 1;
+            }
             i = j;
         }
 
         //check for vertical matches
         int[][] shape2D = new int[shape.length][2];
-        for(i = 0; i<shape.length; i++){
+        for (i = 0; i < shape.length; i++) {
             shape2D[i][0] = shape[i];
-            shape2D[i][1] = shape[i]%8;
+            shape2D[i][1] = shape[i] % 8;
         }
         int count = 0;
-        for(j=0;j<shape.length;j++){
-            for(i=0;i<shape.length; i++){
-                if(shape2D[i][1]==shape2D[j][1]) count++;
+        for (j = 0; j < shape.length; j++) {
+            for (i = 0; i < shape.length; i++) {
+                if (shape2D[i][1] == shape2D[j][1]) count++;
             }
-            if(count<3) shape2D[j][1]= -1;
+            if (count < 3) shape2D[j][1] = -1;
         }
-        for(i=0;i<shape.length;i++){
-            if(shape2D[j][1]!=-1) delete.add(shape2D[j][0]);
+        for (i = 0; i < shape.length; i++) {
+            if (shape2D[j][1] != -1) delete.add(shape2D[j][0]);
         }
 
         //convert ArrayList to integer array for returning
         int[] deleteArr = new int[delete.size()];
-        for (int k=0; k < deleteArr.length; k++){
+        for (int k = 0; k < deleteArr.length; k++) {
             deleteArr[k] = delete.get(k).intValue();
         }
         return deleteArr;
+    }
+
+    public void animateGravity(int[] deletedBoxes){
+        for (int i = 0; i < deletedBoxes.length; i++){
+            int subtract = 8;
+            boxes[deletedBoxes[i]] = boxes[deletedBoxes[i]-subtract];
+            subtract += 8;
+            while (deletedBoxes[i] - subtract >= 0){
+                boxes[deletedBoxes[i]-subtract+8] = boxes[deletedBoxes[i]-subtract];
+                subtract += 8;
+            }
+
+            int colorsLength = boxes[0].getColorsLength();
+            int newColor = (int) (Math.random()*colorsLength);
+            boxes[deletedBoxes[i%8]] = new MyView(this, i%8, 0, newColor);
+        }
     }
 }
 
