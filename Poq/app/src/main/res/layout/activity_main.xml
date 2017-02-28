@@ -38,7 +38,7 @@
         android:layout_height="220pt"
         android:columnCount="8"
         android:rowCount="8"
-        android:orientation="horizontal"
+        android:orientation="vertical"
         tools:context="poq.game.grid">
 
     </GridLayout>

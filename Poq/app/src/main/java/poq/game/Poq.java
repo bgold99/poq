@@ -73,7 +73,7 @@ public class Poq extends AppCompatActivity {
         //Add the squares to the grid layout
         for (int i=0; i<8; i++) {
             for (int j = 0; j < 8; j++) {
-                gridLayout.addView(boxes[j*8+i]);
+                gridLayout.addView(boxes[j*8+i], j*8+1);
             }
         }
 
@@ -237,7 +237,7 @@ public class Poq extends AppCompatActivity {
                         int id1 = getGridIndex(x1, y1);
                         score.setText("Right "+id1);
                         if (id1%8<7 && id1>0) {
-                            animateSwap(id1, id1 + 8);
+                            animateSwap(id1, id1 + 1);
                         }
                     }
 
@@ -246,7 +246,7 @@ public class Poq extends AppCompatActivity {
                         int id1 = getGridIndex(x1, y1);
                         score.setText("Left "+id1);
                         if (id1%8>0 && id1>0) {
-                            animateSwap(id1, id1 - 8);
+                            animateSwap(id1, id1 - 1);
                         }
 
                     }
@@ -258,7 +258,7 @@ public class Poq extends AppCompatActivity {
                         int id1 = getGridIndex(x1, y1);
                         score.setText("Up "+id1);
                         if ((id1-id1%8)/8>0 && id1>0) {     //if not in top row
-                            animateSwap(id1, id1 - 1);
+                            animateSwap(id1, id1 - 8);
                         }
                     }
 
@@ -268,7 +268,7 @@ public class Poq extends AppCompatActivity {
                         score.setText("Down "+id1);
 
                         if ((id1-id1%8)/8<7 && id1>0) {     //if not in bottom row
-                            animateSwap(id1, id1 + 1);
+                            animateSwap(id1, id1 + 8);
                         }
                     }
 
@@ -292,12 +292,13 @@ public class Poq extends AppCompatActivity {
      * @return index of the box clicked within the grid
      */
     public int getGridIndex(float xPix, float yPix){
-        int yPos = (int) (xPix/gridLayout.getWidth()*8);
-        int xPos = (int) ((yPix-linearLayout.getHeight()-getSupportActionBar().getHeight())/gridLayout.getHeight()*8);
+        int xPos = (int) (xPix/gridLayout.getWidth()*8);
+        int yPos = (int) ((yPix-linearLayout.getHeight()-getSupportActionBar().getHeight())/gridLayout.getHeight()*8);
         return yPos*8+xPos;
     }
 
     public void animateSwap(int id1, int id2){
+        gridLayout = (GridLayout) findViewById(R.id.GridLayout);
         System.out.println("ID " + id1+" "+id2);
         printBoxes();
         int colorId1 = boxes[id1].getIdColor();
