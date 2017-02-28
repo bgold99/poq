@@ -37,7 +37,7 @@ public class Poq extends AppCompatActivity {
     public LinearLayout linearLayout;
     private float x1 = 0, y1 = 0, rX1 = 0, rY1 = 0;
     private float x2, y2;
-    static final int MIN_DISTANCE = 150;
+    static final int MIN_DISTANCE = 75;
     boolean paused=true;
 
     //Changes the screen to activity_main (the main game)
@@ -73,7 +73,7 @@ public class Poq extends AppCompatActivity {
         //Add the squares to the grid layout
         for (int i=0; i<8; i++) {
             for (int j = 0; j < 8; j++) {
-                gridLayout.addView(boxes[j*8+i], j*8+1);
+                gridLayout.addView(boxes[i*8+j], i*8+j);
             }
         }
 
@@ -206,7 +206,7 @@ public class Poq extends AppCompatActivity {
     public void printBoxes(){
         for (int i=0; i<8; i++){
             for (int j=0; j<8; j++){
-                System.out.print(boxes[j*8+i].getIdColor()+" ");
+                System.out.print(boxes[i*8+j].getIdColor()+" ");
             }
             System.out.println();
         }
@@ -235,18 +235,21 @@ public class Poq extends AppCompatActivity {
                     // Left to Right swipe action
                     if (x2 > x1) {
                         int id1 = getGridIndex(x1, y1);
-                        score.setText("Right "+id1);
+                        //score.setText("Right "+id1);
                         if (id1%8<7 && id1>0) {
-                            animateSwap(id1, id1 + 1);
+                            animateSwap(id1, id1 + 8);
                         }
+
+
+
                     }
 
                     // Right to left swipe action
                     else {
                         int id1 = getGridIndex(x1, y1);
-                        score.setText("Left "+id1);
+                        //score.setText("Left "+id1);
                         if (id1%8>0 && id1>0) {
-                            animateSwap(id1, id1 - 1);
+                            animateSwap(id1, id1 - 8);
                         }
 
                     }
@@ -256,19 +259,19 @@ public class Poq extends AppCompatActivity {
                     //Up swipe action
                     if(y1>y2){
                         int id1 = getGridIndex(x1, y1);
-                        score.setText("Up "+id1);
+                        //score.setText("Up "+id1);
                         if ((id1-id1%8)/8>0 && id1>0) {     //if not in top row
-                            animateSwap(id1, id1 - 8);
+                            animateSwap(id1, id1 - 1);
                         }
                     }
 
                     //Down swipe action
                     else {
                         int id1 = getGridIndex(x1, y1);
-                        score.setText("Down "+id1);
+                        //score.setText("Down "+id1);
 
                         if ((id1-id1%8)/8<7 && id1>0) {     //if not in bottom row
-                            animateSwap(id1, id1 + 8);
+                            animateSwap(id1, id1 + 1);
                         }
                     }
 
@@ -292,8 +295,8 @@ public class Poq extends AppCompatActivity {
      * @return index of the box clicked within the grid
      */
     public int getGridIndex(float xPix, float yPix){
-        int xPos = (int) (xPix/gridLayout.getWidth()*8);
-        int yPos = (int) ((yPix-linearLayout.getHeight()-getSupportActionBar().getHeight())/gridLayout.getHeight()*8);
+        int yPos = (int) (xPix/gridLayout.getWidth()*8);
+        int xPos = (int) ((yPix-linearLayout.getHeight()-getSupportActionBar().getHeight())/gridLayout.getHeight()*8);
         return yPos*8+xPos;
     }
 
@@ -441,13 +444,5 @@ public class Poq extends AppCompatActivity {
         }
     }
 
-    public void printBoxes(){
-        for (int i=0; i<8; i++) {
-            for (int j = 0; j < 8; j++) {
-                System.out.print(" " + boxes[j*8+i].getIdColor());
-            }
-            System.out.print("\n");
-        }
-    }
 }
 
