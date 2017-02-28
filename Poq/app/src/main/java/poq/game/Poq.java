@@ -398,20 +398,31 @@ public class Poq extends AppCompatActivity {
             int subtract = 8;
             boxes[deletedBoxes[i]] = boxes[deletedBoxes[i]-subtract];
             subtract += 8;
+
+            gridLayout.removeViewsInLayout(deletedBoxes[i], 1);
+            boxes[deletedBoxes[i]] = boxes[deletedBoxes[i]-subtract];
+            gridLayout.addView(boxes[deletedBoxes[i]], deletedBoxes[i]);
+
             while (deletedBoxes[i] - subtract >= 0){
+                gridLayout.removeViewsInLayout(deletedBoxes[i]-subtract+8, 1);
                 boxes[deletedBoxes[i]-subtract+8] = boxes[deletedBoxes[i]-subtract];
+                gridLayout.addView(boxes[deletedBoxes[i]-subtract+8], deletedBoxes[i]-subtract+8);
                 subtract += 8;
             }
 
             int colorsLength = boxes[0].getColorsLength();
             int newColor = (int) (Math.random()*colorsLength);
+            gridLayout.removeViewsInLayout(deletedBoxes[i]%8, 1);
             boxes[deletedBoxes[i]%8] = new MyView(this, deletedBoxes[i]%8, 0, newColor);
+            gridLayout.addView(boxes[deletedBoxes[i]%8], deletedBoxes[i]%8);
         }
     }
 
     public void animateDeletingBoxes(int[] deletedBoxes){
         for (int i = 0; i < deletedBoxes.length; i++){
+            gridLayout.removeViewsInLayout(deletedBoxes[i], 1);
             boxes[deletedBoxes[i]] = new MyView(this, deletedBoxes[i]%8, deletedBoxes[i]/8 - 1,4);
+            gridLayout.addView(boxes[deletedBoxes[i]], deletedBoxes[i]);
         }
     }
 }
