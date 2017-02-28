@@ -19,7 +19,7 @@ import android.view.View;
 public class MyView extends View {
     int idX = 0; //default
     int idY = 0; //default
-    int idShape =0 ;//default
+    public int idShape =0 ;//default
 
     //Set of colors in the grid
     public int colors[] = {
