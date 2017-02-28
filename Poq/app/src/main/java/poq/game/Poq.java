@@ -228,7 +228,7 @@ public class Poq extends AppCompatActivity {
                         int id1 = getGridIndex(x1, y1);
                         score.setText("Right "+id1);
                         if (id1%8<7 && id1>0) {
-                            animateSwap(id1, id1 + 1);
+                            animateSwap(id1, id1 + 8);
                         }
                     }
 
@@ -237,7 +237,7 @@ public class Poq extends AppCompatActivity {
                         int id1 = getGridIndex(x1, y1);
                         score.setText("Left "+id1);
                         if (id1%8>0 && id1>0) {
-                            animateSwap(id1, id1 - 1);
+                            animateSwap(id1, id1 - 8);
                         }
 
                     }
@@ -249,7 +249,7 @@ public class Poq extends AppCompatActivity {
                         int id1 = getGridIndex(x1, y1);
                         score.setText("Up "+id1);
                         if ((id1-id1%8)/8>0 && id1>0) {     //if not in top row
-                            animateSwap(id1, id1 - 8);
+                            animateSwap(id1, id1 - 1);
                         }
                     }
 
@@ -258,7 +258,7 @@ public class Poq extends AppCompatActivity {
                         int id1 = getGridIndex(x1, y1);
                         score.setText("Down "+id1);
                         if ((id1-id1%8)/8<7 && id1>0) {     //if not in bottom row
-                            animateSwap(id1, id1 + 8);
+                            animateSwap(id1, id1 + 1);
                         }
                     }
 
@@ -282,15 +282,17 @@ public class Poq extends AppCompatActivity {
      * @return index of the box clicked within the grid
      */
     public int getGridIndex(float xPix, float yPix){
-        int xPos = (int) (xPix/gridLayout.getWidth()*8);
-        int yPos = (int) ((yPix-linearLayout.getHeight()-getSupportActionBar().getHeight())/gridLayout.getHeight()*8);
+        int yPos = (int) (xPix/gridLayout.getWidth()*8);
+        int xPos = (int) ((yPix-linearLayout.getHeight()-getSupportActionBar().getHeight())/gridLayout.getHeight()*8);
         return yPos*8+xPos;
     }
 
     public void animateSwap(int id1, int id2){
-        System.out.println(id1+" "+id2);
+        System.out.println("ID " + id1+" "+id2);
+        printBoxes();
         int colorId1 = boxes[id1].getIdColor();
         int colorId2 = boxes[id2].getIdColor();
+        System.out.println("Color " + colorId1 + " " + colorId2);
         int x1 = id1%8;
         int y1 = (id1-x1)/8;
         int x2 = id2%8;
@@ -305,6 +307,8 @@ public class Poq extends AppCompatActivity {
         gridLayout.removeViewsInLayout(id2, 1);
         boxes[id2] = new MyView(this, x2, y2, colorId1);
         gridLayout.addView(boxes[id2], id2);
+
+        printBoxes();
     }
 
     public int[] findAdjacentMatch(int xPos, int yPos){
@@ -423,6 +427,15 @@ public class Poq extends AppCompatActivity {
             gridLayout.removeViewsInLayout(deletedBoxes[i], 1);
             boxes[deletedBoxes[i]] = new MyView(this, deletedBoxes[i]%8, deletedBoxes[i]/8 - 1,4);
             gridLayout.addView(boxes[deletedBoxes[i]], deletedBoxes[i]);
+        }
+    }
+
+    public void printBoxes(){
+        for (int i=0; i<8; i++) {
+            for (int j = 0; j < 8; j++) {
+                System.out.print(" " + boxes[j*8+i].getIdColor());
+            }
+            System.out.print("\n");
         }
     }
 }
