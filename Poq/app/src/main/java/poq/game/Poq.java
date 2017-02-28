@@ -298,25 +298,12 @@ public class Poq extends AppCompatActivity {
     }
 
     public void animateSwap(int id1, int id2){
-<<<<<<< Updated upstream
-=======
-<<<<<<< HEAD
-        System.out.println(id1+" "+id2);
-        printBoxes();
-        int colorId1 = boxes[id1].getIdColor();
-        int colorId2 = boxes[id2].getIdColor();
-        System.out.println(colorId1+" "+colorId2);
-=======
->>>>>>> Stashed changes
         System.out.println("ID " + id1+" "+id2);
         printBoxes();
         int colorId1 = boxes[id1].getIdColor();
         int colorId2 = boxes[id2].getIdColor();
         System.out.println("Color " + colorId1 + " " + colorId2);
-<<<<<<< Updated upstream
-=======
->>>>>>> origin/layouts
->>>>>>> Stashed changes
+
         int x1 = id1%8;
         int y1 = (id1-x1)/8;
         int x2 = id2%8;
@@ -331,14 +318,6 @@ public class Poq extends AppCompatActivity {
         gridLayout.removeViewsInLayout(id2, 1);
         boxes[id2] = new MyView(this, x2, y2, colorId1);
         gridLayout.addView(boxes[id2], id2);
-<<<<<<< Updated upstream
-
-=======
-<<<<<<< HEAD
-=======
-
->>>>>>> origin/layouts
->>>>>>> Stashed changes
         printBoxes();
     }
 
