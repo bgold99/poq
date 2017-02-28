@@ -240,7 +240,15 @@ public class Poq extends AppCompatActivity {
                             animateSwap(id1, id1 + 8);
                         }
 
+                        int[] colorGrid = returnBoxesColor();
+                        int[] delete = disappearingMatch(colorGrid);
 
+                        if (delete.length == 0){
+                            animateSwap(id1+8, id1);
+                        }else {
+                            animateDeletingBoxes(delete);
+                            animateGravity(delete);
+                        }
 
                     }
 
@@ -250,6 +258,16 @@ public class Poq extends AppCompatActivity {
                         //score.setText("Left "+id1);
                         if (id1%8>0 && id1>0) {
                             animateSwap(id1, id1 - 8);
+                        }
+
+                        int[] colorGrid = returnBoxesColor();
+                        int[] delete = disappearingMatch(colorGrid);
+
+                        if (delete.length == 0){
+                            animateSwap(id1-8, id1);
+                        }else {
+                            animateDeletingBoxes(delete);
+                            animateGravity(delete);
                         }
 
                     }
@@ -263,6 +281,16 @@ public class Poq extends AppCompatActivity {
                         if ((id1-id1%8)/8>0 && id1>0) {     //if not in top row
                             animateSwap(id1, id1 - 1);
                         }
+
+                        int[] colorGrid = returnBoxesColor();
+                        int[] delete = disappearingMatch(colorGrid);
+
+                        if (delete.length == 0){
+                            animateSwap(id1-1, id1);
+                        }else {
+                            animateDeletingBoxes(delete);
+                            animateGravity(delete);
+                        }
                     }
 
                     //Down swipe action
@@ -272,6 +300,16 @@ public class Poq extends AppCompatActivity {
 
                         if ((id1-id1%8)/8<7 && id1>0) {     //if not in bottom row
                             animateSwap(id1, id1 + 1);
+                        }
+
+                        int[] colorGrid = returnBoxesColor();
+                        int[] delete = disappearingMatch(colorGrid);
+
+                        if (delete.length == 0){
+                            animateSwap(id1+1, id1);
+                        }else {
+                            animateDeletingBoxes(delete);
+                            animateGravity(delete);
                         }
                     }
 
@@ -366,16 +404,16 @@ public class Poq extends AppCompatActivity {
         //check for horizontal matches
         int i = 0;
         int j;
-        while (i < shape.length) {
+        while (i < shape.length-1) {
             if (shape[i] + 1 == shape[i + 1] && shape[i + 1] + 1 == shape[i + 2]) { //if three positions are sequential
                 delete.add(shape[i]);
                 delete.add(shape[i + 1]);
                 delete.add(shape[i + 2]);
                 j = i + 2;
-                if (shape[i + 2] + 1 == shape[i + 3]) {   //if the fourth is also sequential
+                if (i < shape.length -2 && shape[i + 2] + 1 == shape[i + 3]) {   //if the fourth is also sequential
                     delete.add(shape[i + 3]);
                     j = i + 3;
-                    if (shape[i + 3] + 1 == shape[i + 4]) {  //if the fifth is also sequential
+                    if (i < shape.length -3 && shape[i + 3] + 1 == shape[i + 4]) {  //if the fifth is also sequential
                         delete.add(shape[i + 4]);
                         j = i + 4;
                     }
@@ -442,6 +480,14 @@ public class Poq extends AppCompatActivity {
             boxes[deletedBoxes[i]] = new MyView(this, deletedBoxes[i]%8, deletedBoxes[i]/8 - 1,4);
             gridLayout.addView(boxes[deletedBoxes[i]], deletedBoxes[i]);
         }
+    }
+
+    public int[] returnBoxesColor(){
+        int[] boxesColor = new int[boxes.length];
+        for(int i = 0; i<boxes.length;i++){
+            boxesColor[i] = boxes[i].getIdColor();
+        }
+        return boxesColor;
     }
 
 }
