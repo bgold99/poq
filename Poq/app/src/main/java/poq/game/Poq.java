@@ -405,7 +405,13 @@ public class Poq extends AppCompatActivity {
 
             int colorsLength = boxes[0].getColorsLength();
             int newColor = (int) (Math.random()*colorsLength);
-            boxes[deletedBoxes[i%8]] = new MyView(this, i%8, 0, newColor);
+            boxes[deletedBoxes[i]%8] = new MyView(this, deletedBoxes[i]%8, 0, newColor);
+        }
+    }
+
+    public void animateDeletingBoxes(int[] deletedBoxes){
+        for (int i = 0; i < deletedBoxes.length; i++){
+            boxes[deletedBoxes[i]] = new MyView(this, deletedBoxes[i]%8, deletedBoxes[i]/8 - 1,4);
         }
     }
 }
