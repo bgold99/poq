@@ -26,7 +26,7 @@ public class MyView extends View {
             Color.rgb(77, 195, 255),    //light blue
             Color.rgb(153, 51, 255),       //purple
             Color.rgb(0, 51, 204),       //dark blue
-            Color.rgb(255, 0, 102)      //darker pink
+            Color.rgb(255, 0, 102),      //darker pink
     };
 
     public MyView(Context context, int x, int y, int color) {
@@ -51,36 +51,39 @@ public class MyView extends View {
     @Override
     public void onDraw(Canvas canvas){
         Paint p = new Paint();
-        p.setColor(colors[idShape]);
-        //checks which shape is being used and draws it to the canvas
-        //circle:
-        if(idShape == 0) canvas.drawCircle(canvas.getWidth()/2, canvas.getHeight()/2, 50, p);
-        //square:
-        else if(idShape == 1) canvas.drawRect(canvas.getWidth()/2-45, canvas.getHeight()/2-45, canvas.getWidth()/2+45, canvas.getHeight()/2+45, p);
-        //triangle:
-        else if(idShape == 2){
-            Path triangle = new Path();
-            triangle.moveTo(canvas.getWidth()/2,canvas.getHeight()/2-45);
-            triangle.lineTo(canvas.getWidth()/2+45,canvas.getHeight()/2+45);
-            triangle.lineTo(canvas.getWidth()/2-45, canvas.getHeight()/2+45);
-            triangle.lineTo(canvas.getWidth()/2,canvas.getHeight()/2-45);
-            p.setStyle(Paint.Style.FILL);
-            canvas.drawPath(triangle, p);
+        if (idShape<colors.length){
+            p.setColor(colors[idShape]);
+            //checks which shape is being used and draws it to the canvas
+            //circle:
+            if(idShape == 0) canvas.drawCircle(canvas.getWidth()/2, canvas.getHeight()/2, 50, p);
+                //square:
+            else if(idShape == 1) canvas.drawRect(canvas.getWidth()/2-45, canvas.getHeight()/2-45, canvas.getWidth()/2+45, canvas.getHeight()/2+45, p);
+                //triangle:
+            else if(idShape == 2){
+                Path triangle = new Path();
+                triangle.moveTo(canvas.getWidth()/2,canvas.getHeight()/2-45);
+                triangle.lineTo(canvas.getWidth()/2+45,canvas.getHeight()/2+45);
+                triangle.lineTo(canvas.getWidth()/2-45, canvas.getHeight()/2+45);
+                triangle.lineTo(canvas.getWidth()/2,canvas.getHeight()/2-45);
+                p.setStyle(Paint.Style.FILL);
+                canvas.drawPath(triangle, p);
+            }
+            //diamond:
+            else if(idShape==3) {
+                Path diamond = new Path();
+                diamond.moveTo(canvas.getWidth()/2,canvas.getHeight()/2-50);
+                diamond.lineTo(canvas.getWidth()/2+50,canvas.getHeight()/2);
+                diamond.lineTo(canvas.getWidth()/2,canvas.getHeight()/2+50);
+                diamond.lineTo(canvas.getWidth()/2-50,canvas.getHeight()/2);
+                diamond.lineTo(canvas.getWidth()/2,canvas.getHeight()/2-50);
+                p.setStyle(Paint.Style.FILL);
+                canvas.drawPath(diamond, p);
+            }
+            else{
+                //draw nothing
+            }
         }
-        //diamond:
-        else if(idShape==3) {
-            Path diamond = new Path();
-            diamond.moveTo(canvas.getWidth()/2,canvas.getHeight()/2-50);
-            diamond.lineTo(canvas.getWidth()/2+50,canvas.getHeight()/2);
-            diamond.lineTo(canvas.getWidth()/2,canvas.getHeight()/2+50);
-            diamond.lineTo(canvas.getWidth()/2-50,canvas.getHeight()/2);
-            diamond.lineTo(canvas.getWidth()/2,canvas.getHeight()/2-50);
-            p.setStyle(Paint.Style.FILL);
-            canvas.drawPath(diamond, p);
-        }
-        else{
-            //draw nothing
-        }
+
     }
 
     /**

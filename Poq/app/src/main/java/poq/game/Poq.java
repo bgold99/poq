@@ -247,7 +247,7 @@ public class Poq extends AppCompatActivity {
                             animateSwap(id1+8, id1);
                         }else {
                             animateDeletingBoxes(delete);
-                            animateGravity(delete);
+                            //animateGravity(delete);
                         }
 
                     }
@@ -438,7 +438,7 @@ public class Poq extends AppCompatActivity {
             if (count < 3) shape2D[j][1] = -1;
         }
         for (i = 0; i < shape.length; i++) {
-            if (shape2D[j][1] != -1) delete.add(shape2D[j][0]);
+            if (shape2D[i][1] != -1) delete.add(shape2D[i][0]);
         }
 
         //convert ArrayList to integer array for returning
@@ -452,6 +452,10 @@ public class Poq extends AppCompatActivity {
     public void animateGravity(int[] deletedBoxes){
         for (int i = 0; i < deletedBoxes.length; i++){
             int subtract = 8;
+            System.out.println("deletedBoxes[i]: "+deletedBoxes[i]+" subtract: "+subtract);
+            if (deletedBoxes[i]-subtract>=0){
+
+            }
             boxes[deletedBoxes[i]] = boxes[deletedBoxes[i]-subtract];
             subtract += 8;
 
@@ -477,7 +481,7 @@ public class Poq extends AppCompatActivity {
     public void animateDeletingBoxes(int[] deletedBoxes){
         for (int i = 0; i < deletedBoxes.length; i++){
             gridLayout.removeViewsInLayout(deletedBoxes[i], 1);
-            boxes[deletedBoxes[i]] = new MyView(this, deletedBoxes[i]%8, deletedBoxes[i]/8 - 1,4);
+            boxes[deletedBoxes[i]] = new MyView(this, deletedBoxes[i]%8, deletedBoxes[i]/8 - 1, 4);
             gridLayout.addView(boxes[deletedBoxes[i]], deletedBoxes[i]);
         }
     }
