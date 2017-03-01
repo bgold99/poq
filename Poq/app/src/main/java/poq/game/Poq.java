@@ -242,7 +242,8 @@ public class Poq extends AppCompatActivity {
 
                             int[] delete1 = disappearingMatch(id1);
                             int[] delete2 = disappearingMatch(id2);
-                            System.out.println("**************************************"+delete1.length+" "+delete2.length);
+                            deleteMatch(delete1);
+                            deleteMatch(delete2);
                             /*int[] colorGrid = returnBoxesColor();
                             int[] delete = disappearingMatch(id1);
 
@@ -258,9 +259,15 @@ public class Poq extends AppCompatActivity {
                     // Right to left swipe action
                     else {
                         int id1 = getGridIndex(x1, y1);
+                        int id2 = id1-8;
                         score.setText("Left "+id1);
                         if ((id1-id1%8)/8>0 && id1>=0) {
                             animateSwap(id1, id1 - 8);
+
+                            int[] delete1 = disappearingMatch(id1);
+                            int[] delete2 = disappearingMatch(id2);
+                            deleteMatch(delete1);
+                            deleteMatch(delete2);
 
                             /*int[] colorGrid = returnBoxesColor();
                             int[] delete = disappearingMatch(id1);
@@ -280,9 +287,15 @@ public class Poq extends AppCompatActivity {
                     //Up swipe action
                     if(y1>y2){
                         int id1 = getGridIndex(x1, y1);
+                        int id2 = id1-1;
                         score.setText("Up "+id1);
                         if (id1%8>0 && id1>=0) {     //if not in top row
                             animateSwap(id1, id1 - 1);
+
+                            int[] delete1 = disappearingMatch(id1);
+                            int[] delete2 = disappearingMatch(id2);
+                            deleteMatch(delete1);
+                            deleteMatch(delete2);
 
                             /*int[] colorGrid = returnBoxesColor();
                             int[] delete = disappearingMatch(id1);
@@ -299,9 +312,15 @@ public class Poq extends AppCompatActivity {
                     //Down swipe action
                     else {
                         int id1 = getGridIndex(x1, y1);
+                        int id2 = id1+1;
                         score.setText("Down "+id1);
                         if (id1%8<7 && id1>=0) {     //if not in bottom row
                             animateSwap(id1, id1 + 1);
+
+                            int[] delete1 = disappearingMatch(id1);
+                            int[] delete2 = disappearingMatch(id2);
+                            deleteMatch(delete1);
+                            deleteMatch(delete2);
 
                             /*int[] colorGrid = returnBoxesColor();
                             int[] delete = disappearingMatch(id1);
@@ -453,16 +472,16 @@ public class Poq extends AppCompatActivity {
                     boolean plus32 = includes(shape, shape[i]+32);
                     if(plus8 && plus16){
                         delete.add(shape[i]);
-                        delete.add(shape[i+8]); //TODO: caused crash
-                        delete.add(shape[i+16]);
+                        delete.add(shape[i]+8); //TODO: caused crash
+                        delete.add(shape[i]+16);
                         shape[i]=-1;
                         shape[i+8]=-1;
                         shape[i+16]=-1;
                         if(plus24){
-                            delete.add(shape[i+24]);
+                            delete.add(shape[i]+24);
                             shape[i+24]=-1;
                             if(plus32){
-                                delete.add(shape[i+32]);
+                                delete.add(shape[i]+32);
                                 shape[i+32]=-1;
                             }
                         }
@@ -476,7 +495,6 @@ public class Poq extends AppCompatActivity {
         int[] deleteArr = new int[delete.size()];
         for (int k = 0; k < deleteArr.length; k++) {
             deleteArr[k] = delete.get(k).intValue();
-            System.out.println("*******************************************************************"+deleteArr[k]);
         }
         return deleteArr;
     }
@@ -488,13 +506,26 @@ public class Poq extends AppCompatActivity {
         return false;
     }
 
+    public void deleteMatch(int[] boxesToDel){
+        score = score+boxesToDel.length;
+        for(int i=0;i<boxesToDel.length;i++){
+            int[] rc = indexToRC(boxesToDel[i]);
+            int x = rc[1];
+            int y = rc[0];
+            gridLayout.removeViewsInLayout(boxesToDel[i], 1);
+            boxes[boxesToDel[i]] = new MyView(this, x, y, 4);
+            gridLayout.addView(boxes[boxesToDel[i]], boxesToDel[i]);
+
+        }
+    }
+
     public void animateGravity(int[] deletedBoxes){
         for (int i = 0; i < deletedBoxes.length; i++){
             int subtract = 8;
-            System.out.println("deletedBoxes[i]: "+deletedBoxes[i]+" subtract: "+subtract);
+           /* System.out.println("deletedBoxes[i]: "+deletedBoxes[i]+" subtract: "+subtract);
             if (deletedBoxes[i]-subtract>=0){
 
-            }
+            } */
             boxes[deletedBoxes[i]] = boxes[deletedBoxes[i]-subtract];
             subtract += 8;
 
