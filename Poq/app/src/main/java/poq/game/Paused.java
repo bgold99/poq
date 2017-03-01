@@ -8,6 +8,7 @@ import android.view.View;
 public class Paused extends AppCompatActivity {
     private int startTime;
     private int score;
+    private int[] colorLayout;
 
     //Changes the screen to the pause screen
     @Override
@@ -18,6 +19,7 @@ public class Paused extends AppCompatActivity {
         Intent intentIn = getIntent();
         startTime = intentIn.getIntExtra("EXTRA_STARTTIME", 0);
         score = intentIn.getIntExtra("EXTRA_SCORE", 0);
+        colorLayout = intentIn.getIntArrayExtra("EXTRA_COLORLAYOUT");
     }
 
     //Returns to the game when the resume button is pressed
@@ -25,6 +27,7 @@ public class Paused extends AppCompatActivity {
         Intent intent = new Intent(this, Poq.class);
         intent.putExtra("EXTRA_STARTTIME", startTime+1); //how much time is left in the game
         intent.putExtra("EXTRA_SCORE", score);
+        intent.putExtra("EXTRA_COLORLAYOUT", colorLayout);
         startActivity(intent);
     }
 }

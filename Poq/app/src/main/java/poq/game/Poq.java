@@ -34,6 +34,7 @@ public class Poq extends AppCompatActivity {
     long timeRemaining;
     int score = 0;
     public MyView[] boxes = new MyView[64];
+    public int[] colorLayout = new int[64];
     public GridLayout gridLayout;
     public LinearLayout linearLayout;
     private float x1 = 0, y1 = 0, rX1 = 0, rY1 = 0;
@@ -115,6 +116,7 @@ public class Poq extends AppCompatActivity {
         score = intentIn.getIntExtra("EXTRA_SCORE", 0);
         TextView scoreText = (TextView) findViewById(R.id.score);
         scoreText.setText("Score: "+score);
+        colorLayout = intentIn.getIntArrayExtra("EXTRA_COLORLAYOUT");
         startCountdown(startTime);
     }
 
@@ -125,6 +127,10 @@ public class Poq extends AppCompatActivity {
         Intent intent = new Intent(this, Paused.class);
         intent.putExtra("EXTRA_STARTTIME", startTime);
         intent.putExtra("EXTRA_SCORE", score);
+        for(int i=0; i<boxes.length; i++){
+            colorLayout[i] = boxes[i].getIdColor();
+        }
+        intent.putExtra("EXTRA_COLORLAYOUT", colorLayout);
         startActivity(intent);
     }
 
