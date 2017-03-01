@@ -111,6 +111,7 @@ public class Poq extends AppCompatActivity {
         startTime = 1000*intentIn.getIntExtra("EXTRA_STARTTIME", 91);
         second = (TextView) findViewById(R.id.seconds);
         paused = false;
+        score = 0;
         startCountdown(startTime);
     }
 
@@ -217,7 +218,7 @@ public class Poq extends AppCompatActivity {
      */
     @Override
     public boolean onTouchEvent(MotionEvent event){
-        TextView score = (TextView) findViewById(R.id.score);
+        TextView scoreText = (TextView) findViewById(R.id.score);
         switch(event.getAction()) {
             case MotionEvent.ACTION_DOWN:
                 x1 = event.getX();
@@ -236,7 +237,7 @@ public class Poq extends AppCompatActivity {
                     if (x2 > x1) {
                         int id1 = getGridIndex(x1, y1);
                         int id2 = id1+8;
-                        score.setText("Right "+id1);
+
                         if ((id1-id1%8)/8<7 && id1>=0) {
                             animateSwap(id1, id1 + 8);
 
@@ -244,6 +245,8 @@ public class Poq extends AppCompatActivity {
                             int[] delete2 = disappearingMatch(id2);
                             deleteMatch(delete1);
                             deleteMatch(delete2);
+                            scoreText.setText("Score: "+score);
+
                             /*int[] colorGrid = returnBoxesColor();
                             int[] delete = disappearingMatch(id1);
 
@@ -260,7 +263,7 @@ public class Poq extends AppCompatActivity {
                     else {
                         int id1 = getGridIndex(x1, y1);
                         int id2 = id1-8;
-                        score.setText("Left "+id1);
+
                         if ((id1-id1%8)/8>0 && id1>=0) {
                             animateSwap(id1, id1 - 8);
 
@@ -268,6 +271,7 @@ public class Poq extends AppCompatActivity {
                             int[] delete2 = disappearingMatch(id2);
                             deleteMatch(delete1);
                             deleteMatch(delete2);
+                            scoreText.setText("Score: "+score);
 
                             /*int[] colorGrid = returnBoxesColor();
                             int[] delete = disappearingMatch(id1);
@@ -288,7 +292,7 @@ public class Poq extends AppCompatActivity {
                     if(y1>y2){
                         int id1 = getGridIndex(x1, y1);
                         int id2 = id1-1;
-                        score.setText("Up "+id1);
+
                         if (id1%8>0 && id1>=0) {     //if not in top row
                             animateSwap(id1, id1 - 1);
 
@@ -296,6 +300,7 @@ public class Poq extends AppCompatActivity {
                             int[] delete2 = disappearingMatch(id2);
                             deleteMatch(delete1);
                             deleteMatch(delete2);
+                            scoreText.setText("Score: "+score);
 
                             /*int[] colorGrid = returnBoxesColor();
                             int[] delete = disappearingMatch(id1);
@@ -313,7 +318,7 @@ public class Poq extends AppCompatActivity {
                     else {
                         int id1 = getGridIndex(x1, y1);
                         int id2 = id1+1;
-                        score.setText("Down "+id1);
+
                         if (id1%8<7 && id1>=0) {     //if not in bottom row
                             animateSwap(id1, id1 + 1);
 
@@ -321,6 +326,7 @@ public class Poq extends AppCompatActivity {
                             int[] delete2 = disappearingMatch(id2);
                             deleteMatch(delete1);
                             deleteMatch(delete2);
+                            scoreText.setText("Score: "+score);
 
                             /*int[] colorGrid = returnBoxesColor();
                             int[] delete = disappearingMatch(id1);
@@ -442,7 +448,7 @@ public class Poq extends AppCompatActivity {
             //check for vertical matches
             int i = 0;
             int j;
-            while (i < shape.length-1) {
+            while (i < shape.length-2) {
                 if (shape[i] + 1 == shape[i + 1] && shape[i + 1] + 1 == shape[i + 2]) { //if three positions are sequential //TODO caused crash
                     delete.add(shape[i]);
                     delete.add(shape[i + 1]);
