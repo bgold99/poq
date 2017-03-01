@@ -220,6 +220,7 @@ public class Poq extends AppCompatActivity {
     @Override
     public boolean onTouchEvent(MotionEvent event){
         TextView scoreText = (TextView) findViewById(R.id.score);
+        Handler swapHandler = new Handler();
         switch(event.getAction()) {
             case MotionEvent.ACTION_DOWN:
                 x1 = event.getX();
@@ -240,7 +241,7 @@ public class Poq extends AppCompatActivity {
                         int id2 = id1+8;
 
                         if ((id1-id1%8)/8<7 && id1>=0) {
-                            animateSwap(id1, id1 + 8);
+                            animateSwap(id1, id2);
 
                             int[] delete1 = disappearingMatch(id1);
                             int[] delete2 = disappearingMatch(id2);
@@ -248,10 +249,10 @@ public class Poq extends AppCompatActivity {
                             deleteMatch(delete2);
                             scoreText.setText("Score: "+score);
 
-                            int[] colorGrid = returnBoxesColor();
+                            //int[] colorGrid = returnBoxesColor();
 
                             if (delete1.length == 0 && delete2.length == 0) {
-                                animateSwap(id1 - 8, id1);
+                                animateSwap(id2, id1);
                             } else {
                                 HashSet<Integer> commonDelete = new HashSet<Integer>();
 
@@ -263,7 +264,7 @@ public class Poq extends AppCompatActivity {
                                 }
 
                                 List<Integer> delete = new ArrayList<Integer>(commonDelete);
-                                animateGravity(delete);
+                                //animateGravity(delete);
                             }
                         }
 
@@ -273,7 +274,7 @@ public class Poq extends AppCompatActivity {
                         int id2 = id1-8;
 
                         if ((id1-id1%8)/8>0 && id1>=0) {
-                            animateSwap(id1, id1 - 8);
+                            animateSwap(id1, id2);
 
                             int[] delete1 = disappearingMatch(id1);
                             int[] delete2 = disappearingMatch(id2);
@@ -281,10 +282,10 @@ public class Poq extends AppCompatActivity {
                             deleteMatch(delete2);
                             scoreText.setText("Score: "+score);
 
-                            int[] colorGrid = returnBoxesColor();
+                            //int[] colorGrid = returnBoxesColor();
 
                             if (delete1.length == 0 && delete2.length == 0) {
-                                animateSwap(id1 - 8, id1);
+                                animateSwap(id2, id1);
                             } else {
                                 HashSet<Integer> commonDelete = new HashSet<Integer>();
 
@@ -296,7 +297,7 @@ public class Poq extends AppCompatActivity {
                                 }
 
                                 List<Integer> delete = new ArrayList<Integer>(commonDelete);
-                                animateGravity(delete);
+                                //animateGravity(delete);
                             }
                         }
                     }
@@ -309,7 +310,7 @@ public class Poq extends AppCompatActivity {
                         int id2 = id1-1;
 
                         if (id1%8>0 && id1>=0) {     //if not in top row
-                            animateSwap(id1, id1 - 1);
+                            animateSwap(id1, id2);
 
                             int[] delete1 = disappearingMatch(id1);
                             int[] delete2 = disappearingMatch(id2);
@@ -317,10 +318,10 @@ public class Poq extends AppCompatActivity {
                             deleteMatch(delete2);
                             scoreText.setText("Score: "+score);
 
-                            int[] colorGrid = returnBoxesColor();
+                            //int[] colorGrid = returnBoxesColor();
 
                             if (delete1.length == 0 && delete2.length == 0){
-                                animateSwap(id1-1, id1);
+                                animateSwap(id2, id1);
                             }else {
                                 HashSet<Integer> commonDelete = new HashSet<Integer>();
 
@@ -332,7 +333,7 @@ public class Poq extends AppCompatActivity {
                                 }
 
                                 List<Integer> delete = new ArrayList<Integer>(commonDelete);
-                                animateGravity(delete);
+                                //animateGravity(delete);
                             }
                         }
                     }
@@ -343,17 +344,18 @@ public class Poq extends AppCompatActivity {
                         int id2 = id1+1;
 
                         if (id1%8<7 && id1>=0) {     //if not in bottom row
-                            animateSwap(id1, id1 + 1);
+                            animateSwap(id1, id2);
 
                             int[] delete1 = disappearingMatch(id1);
                             int[] delete2 = disappearingMatch(id2);
                             deleteMatch(delete1);
                             deleteMatch(delete2);
                             scoreText.setText("Score: " + score);
-                            int[] colorGrid = returnBoxesColor();
+
+                            //int[] colorGrid = returnBoxesColor();
 
                             if (delete1.length == 0 && delete2.length == 0) {
-                                animateSwap(id1 - 1, id1);
+                                animateSwap(id2, id1);
                             } else {
                                 HashSet<Integer> commonDelete = new HashSet<Integer>();
 
@@ -365,7 +367,7 @@ public class Poq extends AppCompatActivity {
                                 }
 
                                 List<Integer> delete = new ArrayList<Integer>(commonDelete);
-                                animateGravity(delete);
+                                //animateGravity(delete);
                             }
                         }
                     }
