@@ -36,7 +36,7 @@ public class Poq extends AppCompatActivity {
     long timeRemaining;
     int score = 0;
     public MyView[] boxes = new MyView[64];
-    public int[] colorLayout = new int[64];
+    private int[] colorLayout;
     public GridLayout gridLayout;
     public LinearLayout linearLayout;
     private float x1 = 0, y1 = 0, rX1 = 0, rY1 = 0;
@@ -50,6 +50,9 @@ public class Poq extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        Intent intentIn = getIntent();
+        colorLayout = intentIn.getIntArrayExtra("EXTRA_COLORLAYOUT");
+
         gridLayout = (GridLayout) findViewById(R.id.GridLayout);
         linearLayout = (LinearLayout) findViewById(R.id.LinearLayoutTop);
 
@@ -58,12 +61,17 @@ public class Poq extends AppCompatActivity {
             for (int j = 0; j < 8; j++) {
                 //i is the x coordinate
                 //j is the y coordinate of the box in the grid
-
-                int colorsLength = boxes[0].getColorsLength();    //Getting the number of colors in the grid
-                int tColor = (int) (Math.random()*colorsLength);    //Setting random color for box
+                int tColor;
+                if(colorLayout != null){
+                    System.out.println("______________________________________ Tried to get color");
+                    tColor = colorLayout[j * 8 +i]; //Uses the color arrangement from before the game was paused
+                }
+                else {
+                    int colorsLength = boxes[0].getColorsLength();    //Getting the number of colors in the grid
+                    tColor = (int) (Math.random() * colorsLength);    //Setting random color for box
+                }
                 MyView tView = new MyView(this, i, j, tColor);      //Temporary MyView
-                boxes[j*8+i] = tView;
-
+                boxes[j * 8 + i] = tView;
             }
         }
 
@@ -111,14 +119,12 @@ public class Poq extends AppCompatActivity {
                 }
         );
 
-        Intent intentIn = getIntent();
         startTime = 1000*intentIn.getIntExtra("EXTRA_STARTTIME", 91);
         second = (TextView) findViewById(R.id.seconds);
         paused = false;
         score = intentIn.getIntExtra("EXTRA_SCORE", 0);
         TextView scoreText = (TextView) findViewById(R.id.score);
         scoreText.setText("Score: "+score);
-        colorLayout = intentIn.getIntArrayExtra("EXTRA_COLORLAYOUT");
         startCountdown(startTime);
     }
 
@@ -129,6 +135,7 @@ public class Poq extends AppCompatActivity {
         Intent intent = new Intent(this, Paused.class);
         intent.putExtra("EXTRA_STARTTIME", startTime);
         intent.putExtra("EXTRA_SCORE", score);
+        colorLayout = new int[64];
         for(int i=0; i<boxes.length; i++){
             colorLayout[i] = boxes[i].getIdColor();
         }
