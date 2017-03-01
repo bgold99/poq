@@ -95,6 +95,14 @@ public class MyView extends View {
         return colors.length;
     }
 
+    public int getIdX() {
+        return idX;
+    }
+
+    public int getIdY() {
+        return idY;
+    }
+
     /**
      * @return Location of the color of the current square in the array of possible colors
      */

@@ -273,7 +273,7 @@ public class Poq extends AppCompatActivity {
                                 }
 
                                 List<Integer> delete = new ArrayList<Integer>(commonDelete);
-                                //animateGravity(delete);
+                                animateGravity(delete);
                             }
                         }
 
@@ -580,9 +580,13 @@ public class Poq extends AppCompatActivity {
             if (deletedBoxes[i]-subtract>=0){
 
             } */
-            while ((deletedBoxes.get(i)-counter)%8 != 0){
+            while ((deletedBoxes.get(i)-counter)%8 > 0){
                 gridLayout.removeViewsInLayout(deletedBoxes.get(i)-counter, 1);
-                boxes[deletedBoxes.get(i)-counter] = boxes[deletedBoxes.get(i)-counter-1];
+
+                //Making a new view that is a copy of the box above to replace the current box
+                boxes[deletedBoxes.get(i)-counter] = new MyView(this, boxes[deletedBoxes.get(i)-counter-1].getIdX(), boxes[deletedBoxes.get(i)-counter-1].getIdY(), boxes[deletedBoxes.get(i)-counter-1].getIdColor());
+                    //boxes[deletedBoxes.get(i)-counter-1];
+
                 gridLayout.addView(boxes[deletedBoxes.get(i)-counter], deletedBoxes.get(i)-counter);
                 counter += 1;
             }
@@ -594,14 +598,14 @@ public class Poq extends AppCompatActivity {
             gridLayout.addView(boxes[deletedBoxes.get(i)%8], deletedBoxes.get(i)%8);
         }
     }
-
+/*
     public void animateDeletingBoxes(int[] deletedBoxes){
         for (int i = 0; i < deletedBoxes.length; i++){
             gridLayout.removeViewsInLayout(deletedBoxes[i], 1);
             boxes[deletedBoxes[i]] = new MyView(this, deletedBoxes[i]%8, deletedBoxes[i]/8 - 1, 4);
             gridLayout.addView(boxes[deletedBoxes[i]], deletedBoxes[i]);
         }
-    }
+    }*/
 
     public int[] returnBoxesColor(){
         int[] boxesColor = new int[boxes.length];
