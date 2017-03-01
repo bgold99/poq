@@ -472,17 +472,17 @@ public class Poq extends AppCompatActivity {
                     boolean plus32 = includes(shape, shape[i]+32);
                     if(plus8 && plus16){
                         delete.add(shape[i]);
-                        delete.add(shape[i]+8); //TODO: caused crash
+                        delete.add(shape[i]+8);
                         delete.add(shape[i]+16);
-                        shape[i]=-1;
-                        shape[i+8]=-1;
-                        shape[i+16]=-1;
+                        shape[indexOf(shape, i)]=-1;
+                        shape[indexOf(shape, i+8)]=-1;
+                        shape[indexOf(shape, i+16)]=-1;
                         if(plus24){
                             delete.add(shape[i]+24);
-                            shape[i+24]=-1;
+                            shape[indexOf(shape, i+24)]=-1;
                             if(plus32){
                                 delete.add(shape[i]+32);
-                                shape[i+32]=-1;
+                                shape[indexOf(shape, i+32)]=-1;
                             }
                         }
                     }
@@ -504,6 +504,13 @@ public class Poq extends AppCompatActivity {
             if(arr[i]==val) return true;
         }
         return false;
+    }
+
+    public int indexOf(int[] arr, int val){
+        for(int i=0;i<arr.length;i++){
+            if(arr[i]==val) return i;
+        }
+        return -1;
     }
 
     public void deleteMatch(int[] boxesToDel){
