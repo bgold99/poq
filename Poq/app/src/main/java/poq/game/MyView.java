@@ -20,6 +20,7 @@ public class MyView extends View {
     int idX = 0; //default
     int idY = 0; //default
     public int idShape =0 ;//default
+    Canvas canvas;
 
     //Set of colors in the grid
     public int colors[] = {
@@ -49,7 +50,8 @@ public class MyView extends View {
     }
 
     @Override
-    public void onDraw(Canvas canvas){
+    public void onDraw(Canvas c){
+        canvas = c;
         Paint p = new Paint();
         if (idShape<colors.length){
             p.setColor(colors[idShape]);
@@ -99,6 +101,5 @@ public class MyView extends View {
     public int getIdColor() {
         return idShape;
     }
-
 
 }

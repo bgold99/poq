@@ -240,6 +240,9 @@ public class Poq extends AppCompatActivity {
                         if ((id1-id1%8)/8<7 && id1>=0) {
                             animateSwap(id1, id1 + 8);
 
+                            int[] delete1 = disappearingMatch(id1);
+                            int[] delete2 = disappearingMatch(id2);
+                            System.out.println("**************************************"+delete1.length+" "+delete2.length);
                             /*int[] colorGrid = returnBoxesColor();
                             int[] delete = disappearingMatch(id1);
 
@@ -373,6 +376,7 @@ public class Poq extends AppCompatActivity {
         int row = rc[0];
         int col = rc[1];
         ArrayList<Integer> matchPos = new ArrayList<Integer>();   //to be filled with adjacent positions (1-64) of the same shape
+        matchPos.add(index);
         int i=1;
         //keeps going left until not the same color or hits the border
         while(col-i!=-1 && boxes[index-8*i].getIdColor()==boxes[index].getIdColor()) {
@@ -420,7 +424,7 @@ public class Poq extends AppCompatActivity {
             int i = 0;
             int j;
             while (i < shape.length-1) {
-                if (shape[i] + 1 == shape[i + 1] && shape[i + 1] + 1 == shape[i + 2]) { //if three positions are sequential
+                if (shape[i] + 1 == shape[i + 1] && shape[i + 1] + 1 == shape[i + 2]) { //if three positions are sequential //TODO caused crash
                     delete.add(shape[i]);
                     delete.add(shape[i + 1]);
                     delete.add(shape[i + 2]);
@@ -449,7 +453,7 @@ public class Poq extends AppCompatActivity {
                     boolean plus32 = includes(shape, shape[i]+32);
                     if(plus8 && plus16){
                         delete.add(shape[i]);
-                        delete.add(shape[i+8]);
+                        delete.add(shape[i+8]); //TODO: caused crash
                         delete.add(shape[i+16]);
                         shape[i]=-1;
                         shape[i+8]=-1;
