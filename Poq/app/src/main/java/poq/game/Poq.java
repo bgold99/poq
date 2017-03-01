@@ -112,7 +112,9 @@ public class Poq extends AppCompatActivity {
         startTime = 1000*intentIn.getIntExtra("EXTRA_STARTTIME", 91);
         second = (TextView) findViewById(R.id.seconds);
         paused = false;
-        score = 0;
+        score = intentIn.getIntExtra("EXTRA_SCORE", 0);
+        TextView scoreText = (TextView) findViewById(R.id.score);
+        scoreText.setText("Score: "+score);
         startCountdown(startTime);
     }
 
@@ -122,6 +124,7 @@ public class Poq extends AppCompatActivity {
         paused = true;
         Intent intent = new Intent(this, Paused.class);
         intent.putExtra("EXTRA_STARTTIME", startTime);
+        intent.putExtra("EXTRA_SCORE", score);
         startActivity(intent);
     }
 
