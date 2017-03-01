@@ -237,40 +237,37 @@ public class Poq extends AppCompatActivity {
                         int id1 = getGridIndex(x1, y1);
                         int id2 = id1+8;
                         //score.setText("Right "+id1);
-                        if (id1%8<7 && id1>0) {
-                            animateSwap(id1, id2);
+                        if ((id1-id1%8)/8<7 && id1>=0) {
+                            animateSwap(id1, id1 + 8);
+
+                            int[] colorGrid = returnBoxesColor();
+                            int[] delete = disappearingMatch(id1);
+
+                            if (delete.length == 0){
+                                animateSwap(id1+8, id1);
+                            }else {
+                                animateDeletingBoxes(delete);
+                                //animateGravity(delete);
+                            }
                         }
-
-                        int[] colorGrid = returnBoxesColor();
-                        int[] delete = disappearingMatch(id1);
-
-                        if (delete.length == 0){
-                            animateSwap(id2, id1);
-                        }else {
-                            animateDeletingBoxes(delete);
-                            //animateGravity(delete);
-                        }
-
                     }
 
                     // Right to left swipe action
                     else {
                         int id1 = getGridIndex(x1, y1);
-                        int[] del = disappearingMatch(id1);
-
-                        //score.setText("Left");
-                        if (id1%8>0 && id1>0) {
+                        //score.setText("Left "+id1);
+                        if ((id1-id1%8)/8>0 && id1>=0) {
                             animateSwap(id1, id1 - 8);
-                        }
 
-                        int[] colorGrid = returnBoxesColor();
-                        int[] delete = disappearingMatch(id1);
+                            int[] colorGrid = returnBoxesColor();
+                            int[] delete = disappearingMatch(id1);
 
-                        if (delete.length == 0){
-                            animateSwap(id1-8, id1);
-                        }else {
-                            animateDeletingBoxes(delete);
-                           // animateGravity(delete);
+                            if (delete.length == 0){
+                                animateSwap(id1-8, id1);
+                            }else {
+                                animateDeletingBoxes(delete);
+                                // animateGravity(delete);
+                            }
                         }
 
                     }
@@ -281,18 +278,17 @@ public class Poq extends AppCompatActivity {
                     if(y1>y2){
                         int id1 = getGridIndex(x1, y1);
                         //score.setText("Up "+id1);
-                        if ((id1-id1%8)/8>0 && id1>0) {     //if not in top row
+                        if (id1%8>0 && id1>=0) {     //if not in top row
                             animateSwap(id1, id1 - 1);
-                        }
+                            int[] colorGrid = returnBoxesColor();
+                            int[] delete = disappearingMatch(id1);
 
-                        int[] colorGrid = returnBoxesColor();
-                        int[] delete = disappearingMatch(id1);
-
-                        if (delete.length == 0){
-                            animateSwap(id1-1, id1);
-                        }else {
-                            animateDeletingBoxes(delete);
-                           // animateGravity(delete);
+                            if (delete.length == 0){
+                                animateSwap(id1-1, id1);
+                            }else {
+                                animateDeletingBoxes(delete);
+                                //animateGravity(delete);
+                            }
                         }
                     }
 
@@ -301,18 +297,17 @@ public class Poq extends AppCompatActivity {
                         int id1 = getGridIndex(x1, y1);
                         //score.setText("Down "+id1);
 
-                        if ((id1-id1%8)/8<7 && id1>0) {     //if not in bottom row
+                        if (id1%8<7 && id1>=0) {     //if not in bottom row
                             animateSwap(id1, id1 + 1);
-                        }
+                            int[] colorGrid = returnBoxesColor();
+                            int[] delete = disappearingMatch(id1);
 
-                        int[] colorGrid = returnBoxesColor();
-                        int[] delete = disappearingMatch(id1);
-
-                        if (delete.length == 0){
-                            animateSwap(id1+1, id1);
-                        }else {
-                            animateDeletingBoxes(delete);
-                           // animateGravity(delete);
+                            if (delete.length == 0){
+                                animateSwap(id1+1, id1);
+                            }else {
+                                animateDeletingBoxes(delete);
+                                //animateGravity(delete);
+                            }
                         }
                     }
 
