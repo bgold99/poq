@@ -19,6 +19,7 @@ import android.support.v7.app.AppCompatActivity;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 import java.util.Timer;
@@ -275,6 +276,17 @@ public class Poq extends AppCompatActivity {
 
                                 List<Integer> delete = new ArrayList<Integer>(commonDelete);
                                 animateGravity(delete);
+
+                                HashSet<Integer> setDelete = getMatches();
+                                delete = toArrayList(setDelete);
+
+                                //Keep iterating through if falling created more matches
+                                while (delete.size()!=0){
+                                    //animatePause();
+                                    animateGravity(delete);
+                                    setDelete = getMatches();
+                                    delete = toArrayList(setDelete);
+                                }
                             }
                         }
 
@@ -308,6 +320,17 @@ public class Poq extends AppCompatActivity {
 
                                 List<Integer> delete = new ArrayList<Integer>(commonDelete);
                                 animateGravity(delete);
+
+                                HashSet<Integer> setDelete = getMatches();
+                                delete = toArrayList(setDelete);
+
+                                //Keep iterating through if falling created more matches
+                                while (delete.size()!=0){
+                                    //animatePause();
+                                    animateGravity(delete);
+                                    setDelete = getMatches();
+                                    delete = toArrayList(setDelete);
+                                }
                             }
                         }
                     }
@@ -344,6 +367,17 @@ public class Poq extends AppCompatActivity {
 
                                 List<Integer> delete = new ArrayList<Integer>(commonDelete);
                                 animateGravity(delete);
+
+                                HashSet<Integer> setDelete = getMatches();
+                                delete = toArrayList(setDelete);
+
+                                //Keep iterating through if falling created more matches
+                                while (delete.size()!=0){
+                                    //animatePause();
+                                    animateGravity(delete);
+                                    setDelete = getMatches();
+                                    delete = toArrayList(setDelete);
+                                }
                             }
                         }
                     }
@@ -376,8 +410,22 @@ public class Poq extends AppCompatActivity {
                                     commonDelete.add(delete2[i]);
                                 }
 
+                                //Initial use of gravity
                                 List<Integer> delete = new ArrayList<Integer>(commonDelete);
                                 animateGravity(delete);
+
+                                HashSet<Integer> setDelete = getMatches();
+                                delete = toArrayList(setDelete);
+
+                                //Keep iterating through if falling created more matches
+                                while (delete.size()!=0){
+                                    //animatePause();
+                                    animateGravity(delete);
+                                    setDelete = getMatches();
+                                    delete = toArrayList(setDelete);
+                                }
+
+
                             }
                         }
                     }
@@ -391,6 +439,23 @@ public class Poq extends AppCompatActivity {
         }
 
         return super.onTouchEvent(event);
+    }
+
+    /**
+     * Converst a hash set of ints to an arraylist with no repeats.
+     * @param hash Hashset of integers
+     * @return arraylist of integers
+     */
+    public ArrayList<Integer> toArrayList(HashSet<Integer> hash){
+        ArrayList<Integer> list = new ArrayList<Integer>();
+
+        //I know this code is inefficient. I'm having trouble finding a better way due to Object and Integer conflicts
+        for (int i=0; i<64; i++){
+            if (hash.contains(i) && !list.contains(i)){
+                list.add(i);
+            }
+        }
+        return list;
     }
 
     /**
@@ -630,7 +695,7 @@ public class Poq extends AppCompatActivity {
 
     public void animatePause(){
         try {
-            TimeUnit.MILLISECONDS.sleep(50);
+            TimeUnit.MILLISECONDS.sleep(250);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
