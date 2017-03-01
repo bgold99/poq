@@ -22,6 +22,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
 import java.util.Timer;
+import java.util.concurrent.TimeUnit;
 
 
 /**
@@ -306,7 +307,7 @@ public class Poq extends AppCompatActivity {
                                 }
 
                                 List<Integer> delete = new ArrayList<Integer>(commonDelete);
-                                //animateGravity(delete);
+                                animateGravity(delete);
                             }
                         }
                     }
@@ -342,7 +343,7 @@ public class Poq extends AppCompatActivity {
                                 }
 
                                 List<Integer> delete = new ArrayList<Integer>(commonDelete);
-                                //animateGravity(delete);
+                                animateGravity(delete);
                             }
                         }
                     }
@@ -376,7 +377,7 @@ public class Poq extends AppCompatActivity {
                                 }
 
                                 List<Integer> delete = new ArrayList<Integer>(commonDelete);
-                                //animateGravity(delete);
+                                animateGravity(delete);
                             }
                         }
                     }
@@ -573,13 +574,38 @@ public class Poq extends AppCompatActivity {
         }
     }
 
-    public void animateGravity(List<Integer> deletedBoxes){
-        for (int i = 0; i < deletedBoxes.size(); i++){
-            int counter = 0;
-           /* System.out.println("deletedBoxes[i]: "+deletedBoxes[i]+" subtract: "+subtract);
-            if (deletedBoxes[i]-subtract>=0){
+    /**
+     * Put indices in order from left to right and then top to bottom
+     * @param boxes indices to order
+     * @return ordered list of indices
+     */
+    public List<Integer> orderByGravity(List<Integer> boxes) {
+        List<Integer> orderedBoxes = new ArrayList<Integer>();
+        for (int row=0; row<8; row++){
+            for (int col=0; col<8; col++) {
+                int index = col*8 + row;
+                if (boxes.contains(index)){
+                    orderedBoxes.add(index);
+                }
+            }
+        }
+        return orderedBoxes;
+    }
 
-            } */
+    /**
+     * Allow above boxes to fall into empty boxes. Generate new boxes to fall in on top.
+     * @param deletedBoxes List of boxes in the grid that are currently unoccupied (before gravity)
+     */
+    public void animateGravity(List<Integer> deletedBoxes){
+
+        //deleteBoxes needs to be going in order from top to bottom
+        deletedBoxes = orderByGravity(deletedBoxes);
+
+        for (int i = 0; i < deletedBoxes.size(); i++){
+            //animatePause();
+            int counter = 0;
+
+            //moving boxes down
             while ((deletedBoxes.get(i)-counter)%8 > 0){
                 gridLayout.removeViewsInLayout(deletedBoxes.get(i)-counter, 1);
 
@@ -590,22 +616,25 @@ public class Poq extends AppCompatActivity {
                 gridLayout.addView(boxes[deletedBoxes.get(i)-counter], deletedBoxes.get(i)-counter);
                 counter += 1;
             }
-/*
+
+            //generating new random boxes
             int colorsLength = boxes[0].getColorsLength();
             int newColor = (int) (Math.random()*colorsLength);
-            gridLayout.removeViewsInLayout(deletedBoxes.get(i)%8, 1);
-            boxes[deletedBoxes.get(i)%8] = new MyView(this, deletedBoxes.get(i)%8, 0, newColor);
-            gridLayout.addView(boxes[deletedBoxes.get(i)%8], deletedBoxes.get(i)%8);*/
+            gridLayout.removeViewsInLayout(deletedBoxes.get(i)-counter, 1);
+            int x = boxes[deletedBoxes.get(i)-counter].getIdX();
+            int y = boxes[deletedBoxes.get(i)-counter].getIdY();
+            boxes[deletedBoxes.get(i)-counter] = new MyView(this, x, y, newColor);
+            gridLayout.addView(boxes[deletedBoxes.get(i)-counter], deletedBoxes.get(i)-counter);
         }
     }
-/*
-    public void animateDeletingBoxes(int[] deletedBoxes){
-        for (int i = 0; i < deletedBoxes.length; i++){
-            gridLayout.removeViewsInLayout(deletedBoxes[i], 1);
-            boxes[deletedBoxes[i]] = new MyView(this, deletedBoxes[i]%8, deletedBoxes[i]/8 - 1, 4);
-            gridLayout.addView(boxes[deletedBoxes[i]], deletedBoxes[i]);
+
+    public void animatePause(){
+        try {
+            TimeUnit.MILLISECONDS.sleep(50);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
-    }*/
+    }
 
     public int[] returnBoxesColor(){
         int[] boxesColor = new int[boxes.length];
