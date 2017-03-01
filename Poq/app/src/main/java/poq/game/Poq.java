@@ -36,7 +36,7 @@ public class Poq extends AppCompatActivity {
     long timeRemaining;
     int score = 0;
     public MyView[] boxes = new MyView[64];
-    private int[] colorLayout;
+    private int[] colorLayout; //will be used to remember the grid while the game is paused
     public GridLayout gridLayout;
     public LinearLayout linearLayout;
     private float x1 = 0, y1 = 0, rX1 = 0, rY1 = 0;
