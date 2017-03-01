@@ -19,6 +19,7 @@ import android.support.v7.app.AppCompatActivity;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Random;
 import java.util.Timer;
 
@@ -247,20 +248,27 @@ public class Poq extends AppCompatActivity {
                             deleteMatch(delete2);
                             scoreText.setText("Score: "+score);
 
-                            /*int[] colorGrid = returnBoxesColor();
-                            int[] delete = disappearingMatch(id1);
+                            int[] colorGrid = returnBoxesColor();
 
-                            if (delete.length == 0){
-                                animateSwap(id1+8, id1);
-                            }else {
-                                animateDeletingBoxes(delete);
-                                //animateGravity(delete);
-                            }*/
+                            if (delete1.length == 0 && delete2.length == 0) {
+                                animateSwap(id1 - 8, id1);
+                            } else {
+                                HashSet<Integer> commonDelete = new HashSet<Integer>();
+
+                                for (int i = 0; i < delete1.length; i++) {
+                                    commonDelete.add(delete1[i]);
+                                }
+                                for (int i = 0; i < delete2.length; i++) {
+                                    commonDelete.add(delete2[i]);
+                                }
+
+                                List<Integer> delete = new ArrayList<Integer>(commonDelete);
+                                animateGravity(delete);
+                            }
                         }
-                    }
 
-                    // Right to left swipe action
-                    else {
+                        // Right to left swipe action
+                    }else {
                         int id1 = getGridIndex(x1, y1);
                         int id2 = id1-8;
 
@@ -273,17 +281,24 @@ public class Poq extends AppCompatActivity {
                             deleteMatch(delete2);
                             scoreText.setText("Score: "+score);
 
-                            /*int[] colorGrid = returnBoxesColor();
-                            int[] delete = disappearingMatch(id1);
+                            int[] colorGrid = returnBoxesColor();
 
-                            if (delete.length == 0){
-                                animateSwap(id1-8, id1);
-                            }else {
-                                animateDeletingBoxes(delete);
-                                // animateGravity(delete);
-                            }*/
+                            if (delete1.length == 0 && delete2.length == 0) {
+                                animateSwap(id1 - 8, id1);
+                            } else {
+                                HashSet<Integer> commonDelete = new HashSet<Integer>();
+
+                                for (int i = 0; i < delete1.length; i++) {
+                                    commonDelete.add(delete1[i]);
+                                }
+                                for (int i = 0; i < delete2.length; i++) {
+                                    commonDelete.add(delete2[i]);
+                                }
+
+                                List<Integer> delete = new ArrayList<Integer>(commonDelete);
+                                animateGravity(delete);
+                            }
                         }
-
                     }
                 }
 
@@ -302,15 +317,23 @@ public class Poq extends AppCompatActivity {
                             deleteMatch(delete2);
                             scoreText.setText("Score: "+score);
 
-                            /*int[] colorGrid = returnBoxesColor();
-                            int[] delete = disappearingMatch(id1);
+                            int[] colorGrid = returnBoxesColor();
 
-                            if (delete.length == 0){
+                            if (delete1.length == 0 && delete2.length == 0){
                                 animateSwap(id1-1, id1);
                             }else {
-                                animateDeletingBoxes(delete);
-                                //animateGravity(delete);
-                            }*/
+                                HashSet<Integer> commonDelete = new HashSet<Integer>();
+
+                                for(int i = 0; i < delete1.length; i++){
+                                    commonDelete.add(delete1[i]);
+                                }
+                                for(int i = 0; i < delete2.length; i++){
+                                    commonDelete.add(delete2[i]);
+                                }
+
+                                List<Integer> delete = new ArrayList<Integer>(commonDelete);
+                                animateGravity(delete);
+                            }
                         }
                     }
 
@@ -326,17 +349,24 @@ public class Poq extends AppCompatActivity {
                             int[] delete2 = disappearingMatch(id2);
                             deleteMatch(delete1);
                             deleteMatch(delete2);
-                            scoreText.setText("Score: "+score);
+                            scoreText.setText("Score: " + score);
+                            int[] colorGrid = returnBoxesColor();
 
-                            /*int[] colorGrid = returnBoxesColor();
-                            int[] delete = disappearingMatch(id1);
+                            if (delete1.length == 0 && delete2.length == 0) {
+                                animateSwap(id1 - 1, id1);
+                            } else {
+                                HashSet<Integer> commonDelete = new HashSet<Integer>();
 
-                            if (delete.length == 0){
-                                animateSwap(id1+1, id1);
-                            }else {
-                                animateDeletingBoxes(delete);
-                                //animateGravity(delete);
-                            }*/
+                                for (int i = 0; i < delete1.length; i++) {
+                                    commonDelete.add(delete1[i]);
+                                }
+                                for (int i = 0; i < delete2.length; i++) {
+                                    commonDelete.add(delete2[i]);
+                                }
+
+                                List<Integer> delete = new ArrayList<Integer>(commonDelete);
+                                animateGravity(delete);
+                            }
                         }
                     }
 
@@ -532,32 +562,25 @@ public class Poq extends AppCompatActivity {
         }
     }
 
-    public void animateGravity(int[] deletedBoxes){
-        for (int i = 0; i < deletedBoxes.length; i++){
-            int subtract = 8;
+    public void animateGravity(List<Integer> deletedBoxes){
+        for (int i = 0; i < deletedBoxes.size(); i++){
+            int counter = 0;
            /* System.out.println("deletedBoxes[i]: "+deletedBoxes[i]+" subtract: "+subtract);
             if (deletedBoxes[i]-subtract>=0){
 
             } */
-            boxes[deletedBoxes[i]] = boxes[deletedBoxes[i]-subtract];
-            subtract += 8;
-
-            gridLayout.removeViewsInLayout(deletedBoxes[i], 1);
-            boxes[deletedBoxes[i]] = boxes[deletedBoxes[i]-subtract];
-            gridLayout.addView(boxes[deletedBoxes[i]], deletedBoxes[i]);
-
-            while (deletedBoxes[i] - subtract >= 0){
-                gridLayout.removeViewsInLayout(deletedBoxes[i]-subtract+8, 1);
-                boxes[deletedBoxes[i]-subtract+8] = boxes[deletedBoxes[i]-subtract];
-                gridLayout.addView(boxes[deletedBoxes[i]-subtract+8], deletedBoxes[i]-subtract+8);
-                subtract += 8;
+            while ((deletedBoxes.get(i)-counter)%8 != 0){
+                gridLayout.removeViewsInLayout(deletedBoxes.get(i)-counter, 1);
+                boxes[deletedBoxes.get(i)-counter] = boxes[deletedBoxes.get(i)-counter-1];
+                gridLayout.addView(boxes[deletedBoxes.get(i)-counter], deletedBoxes.get(i)-counter);
+                counter += 1;
             }
 
             int colorsLength = boxes[0].getColorsLength();
             int newColor = (int) (Math.random()*colorsLength);
-            gridLayout.removeViewsInLayout(deletedBoxes[i]%8, 1);
-            boxes[deletedBoxes[i]%8] = new MyView(this, deletedBoxes[i]%8, 0, newColor);
-            gridLayout.addView(boxes[deletedBoxes[i]%8], deletedBoxes[i]%8);
+            gridLayout.removeViewsInLayout(deletedBoxes.get(i)%8, 1);
+            boxes[deletedBoxes.get(i)%8] = new MyView(this, deletedBoxes.get(i)%8, 0, newColor);
+            gridLayout.addView(boxes[deletedBoxes.get(i)%8], deletedBoxes.get(i)%8);
         }
     }
 
