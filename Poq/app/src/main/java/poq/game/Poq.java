@@ -332,9 +332,9 @@ public class Poq extends AppCompatActivity {
      * @return index of the box clicked within the grid
      */
     public int getGridIndex(float xPix, float yPix){
-        int yPos = (int) (xPix/gridLayout.getWidth()*8);
-        int xPos = (int) ((yPix-linearLayout.getHeight()-getSupportActionBar().getHeight())/gridLayout.getHeight()*8);
-        return yPos*8+xPos;
+        int column = (int) (xPix/gridLayout.getWidth()*8);
+        int row = (int) ((yPix-linearLayout.getHeight()-getSupportActionBar().getHeight()-50)*8/gridLayout.getHeight());
+        return column*8+row;
     }
 
     public void animateSwap(int id1, int id2){
