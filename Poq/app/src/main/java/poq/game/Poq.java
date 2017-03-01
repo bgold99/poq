@@ -590,12 +590,12 @@ public class Poq extends AppCompatActivity {
                 gridLayout.addView(boxes[deletedBoxes.get(i)-counter], deletedBoxes.get(i)-counter);
                 counter += 1;
             }
-
+/*
             int colorsLength = boxes[0].getColorsLength();
             int newColor = (int) (Math.random()*colorsLength);
             gridLayout.removeViewsInLayout(deletedBoxes.get(i)%8, 1);
             boxes[deletedBoxes.get(i)%8] = new MyView(this, deletedBoxes.get(i)%8, 0, newColor);
-            gridLayout.addView(boxes[deletedBoxes.get(i)%8], deletedBoxes.get(i)%8);
+            gridLayout.addView(boxes[deletedBoxes.get(i)%8], deletedBoxes.get(i)%8);*/
         }
     }
 /*
