@@ -235,16 +235,17 @@ public class Poq extends AppCompatActivity {
                     // Left to Right swipe action
                     if (x2 > x1) {
                         int id1 = getGridIndex(x1, y1);
+                        int id2 = id1+8;
                         //score.setText("Right "+id1);
                         if (id1%8<7 && id1>0) {
-                            animateSwap(id1, id1 + 8);
+                            animateSwap(id1, id2);
                         }
 
                         int[] colorGrid = returnBoxesColor();
-                        int[] delete = disappearingMatch(colorGrid);
+                        int[] delete = disappearingMatch(id1);
 
                         if (delete.length == 0){
-                            animateSwap(id1+8, id1);
+                            animateSwap(id2, id1);
                         }else {
                             animateDeletingBoxes(delete);
                             //animateGravity(delete);
@@ -255,19 +256,21 @@ public class Poq extends AppCompatActivity {
                     // Right to left swipe action
                     else {
                         int id1 = getGridIndex(x1, y1);
-                        //score.setText("Left "+id1);
+                        int[] del = disappearingMatch(id1);
+
+                        //score.setText("Left");
                         if (id1%8>0 && id1>0) {
                             animateSwap(id1, id1 - 8);
                         }
 
                         int[] colorGrid = returnBoxesColor();
-                        int[] delete = disappearingMatch(colorGrid);
+                        int[] delete = disappearingMatch(id1);
 
                         if (delete.length == 0){
                             animateSwap(id1-8, id1);
                         }else {
                             animateDeletingBoxes(delete);
-                            animateGravity(delete);
+                           // animateGravity(delete);
                         }
 
                     }
@@ -283,13 +286,13 @@ public class Poq extends AppCompatActivity {
                         }
 
                         int[] colorGrid = returnBoxesColor();
-                        int[] delete = disappearingMatch(colorGrid);
+                        int[] delete = disappearingMatch(id1);
 
                         if (delete.length == 0){
                             animateSwap(id1-1, id1);
                         }else {
                             animateDeletingBoxes(delete);
-                            animateGravity(delete);
+                           // animateGravity(delete);
                         }
                     }
 
@@ -303,13 +306,13 @@ public class Poq extends AppCompatActivity {
                         }
 
                         int[] colorGrid = returnBoxesColor();
-                        int[] delete = disappearingMatch(colorGrid);
+                        int[] delete = disappearingMatch(id1);
 
                         if (delete.length == 0){
                             animateSwap(id1+1, id1);
                         }else {
                             animateDeletingBoxes(delete);
-                            animateGravity(delete);
+                           // animateGravity(delete);
                         }
                     }
 
@@ -363,30 +366,39 @@ public class Poq extends AppCompatActivity {
         printBoxes();
     }
 
-    public int[] findAdjacentMatch(int xPos, int yPos){
+    /**
+     * Returns an array of all the indices of the shapes which are the same color and above, below,
+     * or to the side of the selected index, so long as they are connected by blocks of the same color
+     * @param index the index of the selected box (achieved from vertical indexing)
+     * @return
+     */
+    public int[] findAdjacentMatch(int index){
+        int[] rc = indexToRC(index);
+        int row = rc[0];
+        int col = rc[1];
         ArrayList<Integer> matchPos = new ArrayList<Integer>();   //to be filled with adjacent positions (1-64) of the same shape
         int i=1;
         //keeps going left until not the same color or hits the border
-        while(xPos-i!=-1 && boxes[yPos*8 + xPos - (i-1)].getIdColor()==boxes[yPos*8 + xPos - i].getIdColor()) {
-            matchPos.add(yPos * 8 + xPos - i);
+        while(col-i!=-1 && boxes[index-8*i].getIdColor()==boxes[index].getIdColor()) {
+            matchPos.add(index-i*8);
             i++;
         }
         i=1;
         //keeps going right until not the same color or hits the border
-        while(xPos+i!=8 && boxes[yPos*8 + xPos + (i-1)].getIdColor()==boxes[yPos*8 + xPos + i].getIdColor()){
-            matchPos.add(yPos*8+xPos+i);
+        while(col+i!=8 && boxes[index+i*8].getIdColor()==boxes[index].getIdColor()){
+            matchPos.add(index+i*8);
             i++;
         }
         i=1;
         //keeps going up until not the same color or hits the border
-        while (yPos-i!=-1 && boxes[(yPos-i)*8 + xPos].getIdColor()==boxes[(yPos-i+1)*8 + xPos].getIdColor()){
-            matchPos.add((yPos-i)*8+xPos);
+        while (row-i!=-1 && boxes[index-i].getIdColor()==boxes[index].getIdColor()){
+            matchPos.add(index-i);
             i++;
         }
         i=1;
         //keeps going down until not the same color or hits the border
-        while (yPos+i!=8 && boxes[(yPos+i)*8 + xPos].getIdColor()==boxes[(yPos+i-1)*8 + xPos].getIdColor()){
-            matchPos.add((yPos+i)*8+xPos);
+        while (row+i!=8 && boxes[index+i].getIdColor()==boxes[index].getIdColor()){
+            matchPos.add(index+i);
             i++;
         }
         //convert ArrayList to integer array for returning
@@ -397,56 +409,83 @@ public class Poq extends AppCompatActivity {
         return intArr;
     }
 
-    public int[] disappearingMatch(int[] shape) {
+    /**
+     * Returns an array of the indices of blocks which should disappear (becuase they are part of a 3+ row/col
+     * @param index vertical index in the grid which the search is radiating from
+     * @return
+     */
+    public int[] disappearingMatch(int index) {
+        int[] shape = findAdjacentMatch(index);
         Arrays.sort(shape);
         ArrayList<Integer> delete = new ArrayList<Integer>();
 
-        //check for horizontal matches
-        int i = 0;
-        int j;
-        while (i < shape.length-1) {
-            if (shape[i] + 1 == shape[i + 1] && shape[i + 1] + 1 == shape[i + 2]) { //if three positions are sequential
-                delete.add(shape[i]);
-                delete.add(shape[i + 1]);
-                delete.add(shape[i + 2]);
-                j = i + 2;
-                if (i < shape.length -2 && shape[i + 2] + 1 == shape[i + 3]) {   //if the fourth is also sequential
-                    delete.add(shape[i + 3]);
-                    j = i + 3;
-                    if (i < shape.length -3 && shape[i + 3] + 1 == shape[i + 4]) {  //if the fifth is also sequential
-                        delete.add(shape[i + 4]);
-                        j = i + 4;
+        if(shape.length>2){
+            //check for vertical matches
+            int i = 0;
+            int j;
+            while (i < shape.length-1) {
+                if (shape[i] + 1 == shape[i + 1] && shape[i + 1] + 1 == shape[i + 2]) { //if three positions are sequential
+                    delete.add(shape[i]);
+                    delete.add(shape[i + 1]);
+                    delete.add(shape[i + 2]);
+                    j = i + 2;
+                    if (i+3 < shape.length && shape[i + 2] + 1 == shape[i + 3]) {   //if the fourth is also sequential
+                        delete.add(shape[i + 3]);
+                        j = i + 3;
+                        if (i+4 < shape.length && shape[i + 3] + 1 == shape[i + 4]) {  //if the fifth is also sequential
+                            delete.add(shape[i + 4]);
+                            j = i + 4;
+                        }
+                    }
+                } else {
+                    j = i + 1;
+                }
+                i = j;
+            }
+
+            //check for horizontal matches
+            i = 0;
+            while(i<shape.length-2){
+                if(shape[i]!=-1){
+                    boolean plus8 = includes(shape, shape[i]+8);
+                    boolean plus16 = includes(shape, shape[i]+16);
+                    boolean plus24 = includes(shape, shape[i]+24);
+                    boolean plus32 = includes(shape, shape[i]+32);
+                    if(plus8 && plus16){
+                        delete.add(shape[i]);
+                        delete.add(shape[i+8]);
+                        delete.add(shape[i+16]);
+                        shape[i]=-1;
+                        shape[i+8]=-1;
+                        shape[i+16]=-1;
+                        if(plus24){
+                            delete.add(shape[i+24]);
+                            shape[i+24]=-1;
+                            if(plus32){
+                                delete.add(shape[i+32]);
+                                shape[i+32]=-1;
+                            }
+                        }
                     }
                 }
-            } else {
-                j = i + 1;
+                i++;
             }
-            i = j;
-        }
-
-        //check for vertical matches
-        int[][] shape2D = new int[shape.length][2];
-        for (i = 0; i < shape.length; i++) {
-            shape2D[i][0] = shape[i];
-            shape2D[i][1] = shape[i] % 8;
-        }
-        int count = 0;
-        for (j = 0; j < shape.length; j++) {
-            for (i = 0; i < shape.length; i++) {
-                if (shape2D[i][1] == shape2D[j][1]) count++;
-            }
-            if (count < 3) shape2D[j][1] = -1;
-        }
-        for (i = 0; i < shape.length; i++) {
-            if (shape2D[i][1] != -1) delete.add(shape2D[i][0]);
         }
 
         //convert ArrayList to integer array for returning
         int[] deleteArr = new int[delete.size()];
         for (int k = 0; k < deleteArr.length; k++) {
             deleteArr[k] = delete.get(k).intValue();
+            System.out.println("*******************************************************************"+deleteArr[k]);
         }
         return deleteArr;
+    }
+
+    public boolean includes(int[] arr, int val){
+        for(int i=0;i<arr.length;i++){
+            if(arr[i]==val) return true;
+        }
+        return false;
     }
 
     public void animateGravity(int[] deletedBoxes){
@@ -492,6 +531,17 @@ public class Poq extends AppCompatActivity {
             boxesColor[i] = boxes[i].getIdColor();
         }
         return boxesColor;
+    }
+
+    /**
+     * Given an index from 0-63 it will return an array containing the row and column values from 0-7
+     * --- WARNING --- only use if you KNOW everything is indexed VERTICALLY
+     */
+    public int[] indexToRC(int index){
+        int[] rc = new int[2];
+        rc[0] = index%8; //row
+        rc[1] = index/8; //column
+        return rc;
     }
 
 }
