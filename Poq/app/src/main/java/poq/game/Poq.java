@@ -474,17 +474,17 @@ public class Poq extends AppCompatActivity {
                         delete.add(shape[i]);
                         delete.add(shape[i]+8);
                         delete.add(shape[i]+16);
-                        shape[indexOf(shape, i)]=-1;
-                        shape[indexOf(shape, i+8)]=-1;
-                        shape[indexOf(shape, i+16)]=-1;
+                        shape[indexOf(shape, shape[i]+8)]=-1;
+                        shape[indexOf(shape, shape[i]+16)]=-1;
                         if(plus24){
                             delete.add(shape[i]+24);
-                            shape[indexOf(shape, i+24)]=-1;
+                            shape[indexOf(shape, shape[i]+24)]=-1;
                             if(plus32){
                                 delete.add(shape[i]+32);
-                                shape[indexOf(shape, i+32)]=-1;
+                                shape[indexOf(shape, shape[i]+32)]=-1;
                             }
                         }
+                        shape[indexOf(shape, shape[i])]=-1;
                     }
                 }
                 i++;
